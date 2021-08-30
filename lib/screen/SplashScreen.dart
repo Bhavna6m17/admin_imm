@@ -1,8 +1,10 @@
 
 import 'dart:async';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:ia_admin/screen/Home.dart';
 
 import 'LoginScreen.dart';
 
@@ -19,8 +21,45 @@ class _SplashScreenState extends State<SplashScreen> {
   
     super.initState();
     Timer(Duration(seconds: 3),(){
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>Login(),),);
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>decider(),),);
     });
+  }
+
+  decider() {
+    return StreamBuilder(
+      stream: FirebaseAuth.instance.authStateChanges(),
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        User user = snapshot.data;
+        if (snapshot.connectionState == ConnectionState.active) {
+          if (user == null) {
+            return Login();
+          }
+          return Home();
+        }
+        return Scaffold(
+          backgroundColor: Colors.white,
+          body: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  height: 100.0,
+                  width: 100.0,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(50.0),
+                    image: DecorationImage(
+                      image: AssetImage('images/logo.jpeg'),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
   }
   @override
   Widget build(BuildContext context) {
@@ -38,7 +77,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 padding: const EdgeInsets.only(top:20.0),
                 child: Center(
                   child: Text("IMMIGRATION ADDA",
-                    style: TextStyle(fontSize: 40),
+                    style: TextStyle(fontSize: 28),
                   ),
                 ),
               ),

@@ -1,6 +1,5 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:ia_admin/Forms/UserDetails.dart';
 import 'package:ia_admin/Models/UserModel.dart';
 class ListDetails extends StatefulWidget {
@@ -18,7 +17,7 @@ class _UserDetailsState extends State<ListDetails> {
   List<UserModel> userList=[];
   UserModel userModel;
   String name;
-  int index;
+ // int index;
   String user;
 
 
@@ -94,7 +93,7 @@ class _UserDetailsState extends State<ListDetails> {
         preferredSize: Size.fromHeight(50.0), // here the desired height
         child: AppBar(
           backgroundColor: Colors.blue.shade900,
-          title: Text("Users Details",
+          title: Text("${widget.type} Details",
             style: TextStyle(fontSize: 20,
                 color: Colors.white),
           ),
@@ -102,97 +101,115 @@ class _UserDetailsState extends State<ListDetails> {
       ),
       body: ListTile(
         title: FutureBuilder(
-          future:db.child("Users").orderByChild("type").equalTo(widget.type).once(),
+          future:db.child("Users").orderByChild("type").equalTo(widget.type).limitToLast(5).once(),
 
           builder: (context, AsyncSnapshot<DataSnapshot> snapshot){
+
+          if(snapshot.connectionState == ConnectionState.done){
             Map<dynamic, dynamic> values =snapshot.data.value;
             values.forEach((key, dat) {
 
               dataSnap.add(dat);
 
             });
-          return GestureDetector(
-            onTap: (){
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => UserDetails(),
-                ),
-              );
-            },
-            child: ListView.builder(
+            return ListView.builder(
+             // reverse: true,
               itemBuilder: (context,index){
-                return Container(
-                  height: 100,
-                  child: (dataSnap[index]['type']==widget.type)?Container(
-                  child: Card(
+                return GestureDetector(
+                  onTap: (){
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => UserDetails(
+                          data: dataSnap,
+                          type: widget.type,
+                          email: dataSnap[index]['email'],
+                          name: dataSnap[index]['name'],
+                          phone: dataSnap[index]['phone'],
+                          profileimg: dataSnap[index]['profileimage'].toString(),
 
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                      // if you need this
+
+                        ),
                       ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      child: Row(
-                        children: [
-                          Container(
-                            height: 60,
-                            width: 60,
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
+                    );
+                  },
+                  child: Container(
+                    height: 100,
+                    child: (dataSnap[index]['type']==widget.type)?Container(
+                      child: Card(
 
-                                fit: BoxFit.cover,
-                                scale: 1,
-                                image:
-                                dataSnap[index]["profileimage"].toString() == ""?
-                                AssetImage('images/icons_person.png'):
-                                  NetworkImage(dataSnap[index]["profileimage"]),
-                              ),
-                            ),
-                          ),
-                           Padding(
-                             padding: const EdgeInsets.fromLTRB(10,0,0,10),
-                             child:Column(
-                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                               crossAxisAlignment: CrossAxisAlignment.start,
-                               children: [
-                                 SizedBox(
-                                 width: 300.0,
-                                   child: Text(dataSnap[index]["name"].toString().trimLeft()??" ",
-                                overflow: TextOverflow.ellipsis,
-                                 softWrap: false,
-                                  maxLines: 1,
-                                 style: TextStyle(fontSize: 20,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          // if you need this
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                flex: 2,
+                                child: Container(
+                                  height: 60,
+                                  width: 60,
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
 
-                                      color: Colors.blue.shade900),
+                                      fit: BoxFit.cover,
+                                      scale: 1,
+                                      image:
+                                      dataSnap[index]["profileimage"].toString() == ""?
+                                      AssetImage('images/icons_person.png'):
+                                      NetworkImage(dataSnap[index]["profileimage"]),
+                                    ),
+                                  ),
                                 ),
-                                 ),
-                                 Text(dataSnap[index]["email"]??" ",
-                                   style: TextStyle(fontSize: 17,
-                                       color: Colors.blue.shade900),
-                                 ),
-    ]
-                             ),
-                           ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(10,0,0,10),
+                                child:Column(
+                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      SizedBox(
+                                        width: 300.0,
+                                        child: Text(dataSnap[index]["name"].toString().trimLeft()??" ",
+                                          overflow: TextOverflow.ellipsis,
+                                          softWrap: false,
+                                          maxLines: 1,
+                                          style: TextStyle(fontSize: 20,
+
+                                              color: Colors.blue.shade900),
+                                        ),
+                                      ),
+                                      Text(dataSnap[index]["email"]??" ",
+                                        style: TextStyle(fontSize: 17,
+                                            color: Colors.blue.shade900),
+                                      ),
+                                    ]
+                                ),
+                              ),
 
 
-                                  //  Text("type:${dataSnap[index]["type"]}",
-                                  //     style: TextStyle(fontSize: 20,
-                                  //     color: Colors.blue.shade900,
-                                  //     ),
-                                  // ),
+                              //  Text("type:${dataSnap[index]["type"]}",
+                              //     style: TextStyle(fontSize: 20,
+                              //     color: Colors.blue.shade900,
+                              //     ),
+                              // ),
                             ],
 
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                ):Container(),);
+                    ):Container(),),
+                );
               },
               itemCount: dataSnap.length,
 
-            ),
-          );
-        },)
+            );
+          }
+          return Center(child: CircularProgressIndicator());
+
+          },)
       ),
 
       // body: FutureBuilder(

@@ -11,6 +11,7 @@ import 'package:ia_admin/details/SellerDetails.dart';
 import 'package:ia_admin/details/ListDetails.dart';
 import 'package:ia_admin/screen/LoginScreen.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:responsive_builder/responsive_builder.dart';
 class Home extends StatefulWidget {
 
   @override
@@ -18,7 +19,6 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-
   UserModel userModel;
   List<UserModel> userList=[];
   DatabaseReference db = FirebaseDatabase.instance.reference();
@@ -37,11 +37,11 @@ class _HomeState extends State<Home> {
 
  Future<void> getData() async {
 
-   await db.child("Users").orderByChild("type").equalTo("User").once().then((DataSnapshot snapshot){
+   await db.child("Posts").once().then((DataSnapshot snapshot){
      Map<dynamic, dynamic> values = snapshot.value;
      values.forEach((key,values) {
        dataa=values;
-       print("=========${dataa["name"]}");
+       print("=========${dataa["image"]}");
      }
      );
    }
@@ -60,12 +60,28 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    
+    return ScreenTypeLayout(
+    mobile:MobileHome(),desktop:DesktopHome() ,
+    );
+  }
+}
+class MobileHome extends StatelessWidget {
+  const MobileHome({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return  MaterialApp(
       home: Scaffold(
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(60.0), // here the desired height
           child: AppBar(
-         leading: CircleAvatar (child: Image.asset("images/logo.jpeg")),
+            leading: Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: CircleAvatar (
+                backgroundImage: AssetImage("images/logo.jpeg"),
+              ),
+            ),
             backgroundColor: Color(0xff0d47a1),
             title: Text(
               "Immigration Adda",
@@ -76,18 +92,19 @@ class _HomeState extends State<Home> {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              TextButton(onPressed: (){
-                print("button pressed!");
-                putdata();
-              }, child: Text("Admin Panel",
-              style: TextStyle(fontSize: 20,
-              fontStyle: (FontStyle.italic),
-                color: Colors.black,
-              ),
-              ),),
+              // TextButton(onPressed: (){
+              //   print("button pressed!");
+              //   putdata();
+              // }, child: Text("Admin Panel",
+              // style: TextStyle(fontSize: 20,
+              // fontStyle: (FontStyle.italic),
+              //   color: Colors.black,
+              // ),
+              // ),),
               GridView.count(
                 scrollDirection: Axis.vertical,
                 physics: NeverScrollableScrollPhysics(),
+                childAspectRatio: 1.2,
                 mainAxisSpacing: 5,
                 shrinkWrap: true,
                 crossAxisCount: 2,
@@ -105,7 +122,7 @@ class _HomeState extends State<Home> {
                     child: Card(
                       color: Color(0xff0d47a1),
                       margin:
-                          EdgeInsets.symmetric(vertical: 16, horizontal: 10),
+                      EdgeInsets.symmetric(vertical: 16, horizontal: 10),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(40),
                         // if you need this
@@ -128,7 +145,7 @@ class _HomeState extends State<Home> {
                                 "Seller Details",
                                 style: TextStyle(
                                   color: Colors.white,
-                                  fontSize: 26,
+                                  fontSize: 22,
                                 ),
                               ),
                             ),
@@ -150,7 +167,7 @@ class _HomeState extends State<Home> {
                     },
                     child: Card(
                       margin:
-                          EdgeInsets.symmetric(vertical: 16, horizontal: 10),
+                      EdgeInsets.symmetric(vertical: 16, horizontal: 10),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(40),
                         // if you need this
@@ -171,7 +188,7 @@ class _HomeState extends State<Home> {
                               child: Text(
                                 "User Details",
                                 style: TextStyle(
-                                  fontSize: 26,
+                                  fontSize: 22,
                                 ),
                               ),
                             ),
@@ -187,16 +204,16 @@ class _HomeState extends State<Home> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) {
-                            return
+                            builder: (context) {
+                              return
                                 Events();
-                          }
+                            }
                         ),
                       );
                     },
                     child: Card(
                       margin:
-                          EdgeInsets.symmetric(vertical: 16, horizontal: 10),
+                      EdgeInsets.symmetric(vertical: 16, horizontal: 10),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(40),
                         side: BorderSide(
@@ -215,7 +232,8 @@ class _HomeState extends State<Home> {
                               child: Text(
                                 "Event",
                                 style: TextStyle(
-                                  fontSize: 26,
+                                  fontSize: 22
+                                  ,
                                 ),
                               ),
                             ),
@@ -238,7 +256,7 @@ class _HomeState extends State<Home> {
                     child: Card(
                       color: Color(0xff0d47a1),
                       margin:
-                          EdgeInsets.symmetric(vertical: 16, horizontal: 10),
+                      EdgeInsets.symmetric(vertical: 16, horizontal: 10),
 
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(40),
@@ -262,7 +280,7 @@ class _HomeState extends State<Home> {
                                 "Post",
                                 style: TextStyle(
                                   color: Colors.white,
-                                  fontSize: 26,
+                                  fontSize: 22,
                                 ),
                               ),
                             ),
@@ -284,8 +302,8 @@ class _HomeState extends State<Home> {
                     },
                     child: Card(
                       color: Color(0xff0d47a1),
-                       margin:
-                          EdgeInsets.symmetric(vertical: 16, horizontal: 10),
+                      margin:
+                      EdgeInsets.symmetric(vertical: 16, horizontal: 10),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(40),
                         // if you need this
@@ -307,7 +325,7 @@ class _HomeState extends State<Home> {
                                 "IELTS Classes",
                                 style: TextStyle(
                                   color: Colors.white,
-                                  fontSize: 26,
+                                  fontSize: 22,
                                 ),
                               ),
                             ),
@@ -329,8 +347,8 @@ class _HomeState extends State<Home> {
                     },
                     child: Card(
 
-                       margin:
-                          EdgeInsets.symmetric(vertical: 16, horizontal: 10),
+                      margin:
+                      EdgeInsets.symmetric(vertical: 16, horizontal: 10),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(40),
                         // if you need this
@@ -353,7 +371,7 @@ class _HomeState extends State<Home> {
                                 "IELTS Test",
                                 style: TextStyle(
 
-                                  fontSize: 26,
+                                  fontSize: 22,
                                 ),
                               ),
                             ),
@@ -374,8 +392,8 @@ class _HomeState extends State<Home> {
                       );
                     },
                     child: Card(
-                       margin:
-                          EdgeInsets.symmetric(vertical: 16, horizontal: 10),
+                      margin:
+                      EdgeInsets.symmetric(vertical: 16, horizontal: 10),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(40),
                         // if you need this
@@ -395,7 +413,7 @@ class _HomeState extends State<Home> {
                               child: Text(
                                 "IELTS Data",
                                 style: TextStyle(
-                                  fontSize: 26,
+                                  fontSize: 22,
                                 ),
                               ),
                             ),
@@ -418,7 +436,7 @@ class _HomeState extends State<Home> {
                     child: Card(
                       color: Color(0xff0d47a1),
                       margin:
-                          EdgeInsets.symmetric(vertical: 16, horizontal: 10),
+                      EdgeInsets.symmetric(vertical: 16, horizontal: 10),
 
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(40),
@@ -441,7 +459,7 @@ class _HomeState extends State<Home> {
                                 "Plans",
                                 style: TextStyle(
                                   color: Colors.white,
-                                  fontSize: 26,
+                                  fontSize: 22,
                                 ),
                               ),
                             ),
@@ -463,8 +481,8 @@ class _HomeState extends State<Home> {
                     },
                     child: Card(
                       color: Color(0xff0d47a1),
-                       margin:
-                          EdgeInsets.symmetric(vertical: 16, horizontal: 10),
+                      margin:
+                      EdgeInsets.symmetric(vertical: 16, horizontal: 10),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(40),
                         // if you need this
@@ -486,7 +504,7 @@ class _HomeState extends State<Home> {
                                 "My Match",
                                 style: TextStyle(
                                   color: Colors.white,
-                                  fontSize: 26,
+                                  fontSize: 22,
                                 ),
                               ),
                             ),
@@ -507,8 +525,8 @@ class _HomeState extends State<Home> {
                       );
                     },
                     child: Card(
-                       margin:
-                          EdgeInsets.symmetric(vertical: 16, horizontal: 10),
+                      margin:
+                      EdgeInsets.symmetric(vertical: 16, horizontal: 10),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(40),
                         // if you need this
@@ -528,7 +546,7 @@ class _HomeState extends State<Home> {
                               child: Text(
                                 "Hot Area Target",
                                 style: TextStyle(
-                                  fontSize: 26,
+                                  fontSize: 22,
                                 ),
                               ),
                             ),
@@ -544,27 +562,562 @@ class _HomeState extends State<Home> {
               // Spacer(
               //   flex: 1,
               // ),
-              Container(
-                height: 50,width: 130,
-                color: Color(0xff0d47a1),
-                child: ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateColor.resolveWith((states) => Color(0xff0d47a1))
+              Padding(padding: EdgeInsets.all(8),
+                child:  Container(
+                  height: 50,width: 130,
+                  //color: Color(0xff0d47a1),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10)
                   ),
-                  onPressed: () {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(builder: (context) => Login()),
-                    );
-                  },
+                  child: ElevatedButton(
+                    style: ButtonStyle(
 
-                  child: Text("Log Out",
-                    style: TextStyle(color: Colors.white,
-                    fontSize: 23
+                        backgroundColor: MaterialStateColor.resolveWith((states) => Color(0xff0d47a1))
+                    ),
+                    onPressed: () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => Login()),
+                      );
+                    },
+
+                    child: Text("Log Out",
+                      style: TextStyle(color: Colors.white,
+                          fontSize: 20
+                      ),
                     ),
                   ),
-                ),
+                ),),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class DesktopHome extends StatelessWidget {
+  const DesktopHome({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return  MaterialApp(
+      home: Scaffold(
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(60.0), // here the desired height
+          child: AppBar(
+            leading: Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: CircleAvatar (
+                backgroundImage: AssetImage("images/logo.jpeg"),
               ),
+            ),
+            backgroundColor: Color(0xff0d47a1),
+            title: Text(
+              "Immigration Adda",
+              style: TextStyle(fontSize: 24, color: Colors.white),
+            ),
+          ),
+        ),
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              // TextButton(onPressed: (){
+              //   print("button pressed!");
+              //   putdata();
+              // }, child: Text("Admin Panel",
+              // style: TextStyle(fontSize: 20,
+              // fontStyle: (FontStyle.italic),
+              //   color: Colors.black,
+              // ),
+              // ),),
+              GridView.count(
+                scrollDirection: Axis.vertical,
+                physics: NeverScrollableScrollPhysics(),
+                childAspectRatio: 1.2,
+                mainAxisSpacing: 5,
+                shrinkWrap: true,
+                crossAxisCount: 5,
+                padding: EdgeInsets.all(10),
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ListDetails(type: "Seller",),
+                        ),
+                      );
+                    },
+                    child: Card(
+                      color: Color(0xff0d47a1),
+                      margin:
+                      EdgeInsets.symmetric(vertical: 16, horizontal: 10),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(40),
+                        // if you need this
+                        side: BorderSide(
+
+                          width: 0.5,
+                        ),
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.sell_rounded,
+                            size: 40,
+                            color: Colors.white,
+                          ),
+                          Container(
+                            child: Center(
+                              child: Text(
+                                "Seller Details",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 22,
+                                ),
+                              ),
+                            ),
+                            // width: 200,
+                            // height: 180,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ListDetails(type: "User",),
+                        ),
+                      );
+                    },
+                    child: Card(
+                      margin:
+                      EdgeInsets.symmetric(vertical: 16, horizontal: 10),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(40),
+                        // if you need this
+                        side: BorderSide(
+                          color: Colors.blue.shade900,
+                          width: 1,
+                        ),
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.person,
+                            size: 40,
+                          ),
+                          Container(
+                            child: Center(
+                              child: Text(
+                                "User Details",
+                                style: TextStyle(
+                                  fontSize: 22,
+                                ),
+                              ),
+                            ),
+                            // width: 200,
+                            // height: 200,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) {
+                              return
+                                Events();
+                            }
+                        ),
+                      );
+                    },
+                    child: Card(
+                      margin:
+                      EdgeInsets.symmetric(vertical: 16, horizontal: 10),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(40),
+                        side: BorderSide(
+                          width: 1,
+                        ),
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.event,
+                            size: 40,
+                          ),
+                          Container(
+                            child: Center(
+                              child: Text(
+                                "Event",
+                                style: TextStyle(
+                                  fontSize: 22
+                                  ,
+                                ),
+                              ),
+                            ),
+                            // width: 200,
+                            // height: 100,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Posts(),
+                        ),
+                      );
+                    },
+                    child: Card(
+                      color: Color(0xff0d47a1),
+                      margin:
+                      EdgeInsets.symmetric(vertical: 16, horizontal: 10),
+
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(40),
+                        // if you need this
+                        side: BorderSide(
+                          color: Colors.blue.shade900,
+                          width: 1,
+                        ),
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.post_add,
+                            size: 40,
+                            color: Colors.white,
+                          ),
+                          Container(
+                            child: Center(
+                              child: Text(
+                                "Post",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 22,
+                                ),
+                              ),
+                            ),
+                            // width: 200,
+                            // height: 200,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Study(),
+                        ),
+                      );
+                    },
+                    child: Card(
+                      color: Color(0xff0d47a1),
+                      margin:
+                      EdgeInsets.symmetric(vertical: 16, horizontal: 10),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(40),
+                        // if you need this
+                        side: BorderSide(
+                          width: 1,
+                        ),
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.class__outlined,
+                            size: 40,
+                            color: Colors.white,
+                          ),
+                          Container(
+                            child: Center(
+                              child: Text(
+                                "IELTS Classes",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 22,
+                                ),
+                              ),
+                            ),
+                            // width: 200,
+                            // height: 200,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Study(),
+                        ),
+                      );
+                    },
+                    child: Card(
+
+                      margin:
+                      EdgeInsets.symmetric(vertical: 16, horizontal: 10),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(40),
+                        // if you need this
+                        side: BorderSide(
+                          color: Colors.blue.shade900,
+                          width: 1,
+                        ),
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.text_snippet_rounded,
+                            size: 40,
+
+                          ),
+                          Container(
+                            child: Center(
+                              child: Text(
+                                "IELTS Test",
+                                style: TextStyle(
+
+                                  fontSize: 22,
+                                ),
+                              ),
+                            ),
+                            // width: 200,
+                            // height: 200,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Seller(),
+                        ),
+                      );
+                    },
+                    child: Card(
+                      margin:
+                      EdgeInsets.symmetric(vertical: 16, horizontal: 10),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(40),
+                        // if you need this
+                        side: BorderSide(
+                          width: 1,
+                        ),
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.book,
+                            size: 40,
+                          ),
+                          Container(
+                            child: Center(
+                              child: Text(
+                                "IELTS Data",
+                                style: TextStyle(
+                                  fontSize: 22,
+                                ),
+                              ),
+                            ),
+                            // width: 200,
+                            // height: 200,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Plans(),
+                        ),
+                      );
+                    },
+                    child: Card(
+                      color: Color(0xff0d47a1),
+                      margin:
+                      EdgeInsets.symmetric(vertical: 16, horizontal: 10),
+
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(40),
+                        // if you need this
+                        side: BorderSide(
+                          width: 1,
+                        ),
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.book,
+                            size: 40,
+                            color: Colors.white,
+                          ),
+                          Container(
+                            child: Center(
+                              child: Text(
+                                "Plans",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 22,
+                                ),
+                              ),
+                            ),
+                            // width: 200,
+                            // height: 200,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => MyMatch(),
+                        ),
+                      );
+                    },
+                    child: Card(
+                      color: Color(0xff0d47a1),
+                      margin:
+                      EdgeInsets.symmetric(vertical: 16, horizontal: 10),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(40),
+                        // if you need this
+                        side: BorderSide(
+                          width: 1,
+                        ),
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.mail_outline_rounded,
+                            size: 40,
+                            color: Colors.white,
+                          ),
+                          Container(
+                            child: Center(
+                              child: Text(
+                                "My Match",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 22,
+                                ),
+                              ),
+                            ),
+                            // width: 200,
+                            // height: 200,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => HotAreas(),
+                        ),
+                      );
+                    },
+                    child: Card(
+                      margin:
+                      EdgeInsets.symmetric(vertical: 16, horizontal: 10),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(40),
+                        // if you need this
+                        side: BorderSide(
+                          width: 1,
+                        ),
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.map,
+                            size: 40,
+                          ),
+                          Container(
+                            child: Center(
+                              child: Text(
+                                "Hot Area Target",
+                                style: TextStyle(
+                                  fontSize: 22,
+                                ),
+                              ),
+                            ),
+                            // width: 200,
+                            // height: 200,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              // Spacer(
+              //   flex: 1,
+              // ),
+              Padding(padding: EdgeInsets.all(8),
+                child:  Container(
+                  height: 50,width: 130,
+                  //color: Color(0xff0d47a1),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10)
+                  ),
+                  child: ElevatedButton(
+                    style: ButtonStyle(
+
+                        backgroundColor: MaterialStateColor.resolveWith((states) => Color(0xff0d47a1))
+                    ),
+                    onPressed: () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => Login()),
+                      );
+                    },
+
+                    child: Text("Log Out",
+                      style: TextStyle(color: Colors.white,
+                          fontSize: 20
+                      ),
+                    ),
+                  ),
+                ),),
             ],
           ),
         ),

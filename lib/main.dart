@@ -1,8 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:ia_admin/Forms/SellerForm.dart';
 import 'package:ia_admin/Forms/UserDetails.dart';
-import 'package:ia_admin/details/MyMatch.dart';
 import 'package:ia_admin/provider/auth_provider.dart';
 import 'package:ia_admin/screen/Home.dart';
 import 'package:ia_admin/screen/SplashScreen.dart';
@@ -42,7 +42,7 @@ class _HelloState extends State<Hello> {
 
               ],
               child: MaterialApp(
-                home: UserDetails(),
+                home: Home(),
               ),
             );
           }

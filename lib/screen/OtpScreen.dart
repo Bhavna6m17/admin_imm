@@ -68,54 +68,56 @@ class _OtpaScreenState extends State<OtpaScreen> {
 
   @override
   Widget build(BuildContext context) {
+
     return SafeArea(
-
       child: Scaffold(
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            SizedBox(height: 40,),
-            Image.asset("images/logo.jpeg",height: 190,),
-            SizedBox(height: 120),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+        body: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              SizedBox(height: 40,),
+              Image.asset("images/logo.jpeg",height: 190,),
+              SizedBox(height: 120),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
 
-              child: TextField(
-                controller: OTPcontroller,
-                style: TextStyle(
-                  fontSize: 26,
+                child: TextField(
+                  controller: OTPcontroller,
+                  style: TextStyle(
+                    fontSize: 26,
+                  ),
+                  maxLength: 6,
+
+                  keyboardType: TextInputType.phone,
+                  decoration: InputDecoration(
+
+                      hintText: "Enter your OTP",
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(22.0),
+                      ),             ),
                 ),
-                maxLength: 6,
-
-                keyboardType: TextInputType.phone,
-                decoration: InputDecoration(
-
-                    hintText: "Enter your OTP",
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(22.0),
-                    ),             ),
+              ),
+          Container(
+              color: Color(0xff0d47a1),
+            height: 50, width: 130,
+            child: ElevatedButton(
+              style: ButtonStyle(
+                  backgroundColor: MaterialStateColor.resolveWith((states) => Color(0xff0d47a1))
+              ),
+              onPressed: (){
+             verifyOTP(context);
+            }, child: Text("Login",
+              style: TextStyle(color: Colors.white,
+                  fontSize: 23
               ),
             ),
-        Container(
-            color: Color(0xff0d47a1),
-          height: 50, width: 130,
-          child: ElevatedButton(
-            style: ButtonStyle(
-                backgroundColor: MaterialStateColor.resolveWith((states) => Color(0xff0d47a1))
-            ),
-            onPressed: (){
-           verifyOTP(context);
-          }, child: Text("Login",
-            style: TextStyle(color: Colors.white,
-                fontSize: 23
+
             ),
           ),
+            ],
 
           ),
-        ),
-          ],
-
         ),
       ),
     );
