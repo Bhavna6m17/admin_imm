@@ -13,6 +13,11 @@ class _StudyState extends State<Study> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            bottom: Radius.circular(30),
+          ),
+        ),
         title: Text('ILETS CLASSES'),
         backgroundColor: Colors.blue.shade900,
       ),

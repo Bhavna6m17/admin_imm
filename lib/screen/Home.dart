@@ -7,7 +7,6 @@ import 'package:ia_admin/details/IletStudy.dart';
 import 'package:ia_admin/details/MyMatch.dart';
 import 'package:ia_admin/details/Plan.dart';
 import 'package:ia_admin/details/Post.dart';
-import 'package:ia_admin/details/SellerDetails.dart';
 import 'package:ia_admin/details/ListDetails.dart';
 import 'package:ia_admin/screen/LoginScreen.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -37,11 +36,11 @@ class _HomeState extends State<Home> {
 
  Future<void> getData() async {
 
-   await db.child("Posts").once().then((DataSnapshot snapshot){
+   await db.child("Users").orderByChild("uid").equalTo("6lOVecgdWYU7oyjxvpT5s5ErIpg1").once().then((DataSnapshot snapshot){
      Map<dynamic, dynamic> values = snapshot.value;
      values.forEach((key,values) {
        dataa=values;
-       print("=========${dataa["image"]}");
+       print("------------------${dataa["name"]}");
      }
      );
    }
@@ -76,6 +75,11 @@ class MobileHome extends StatelessWidget {
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(60.0), // here the desired height
           child: AppBar(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.vertical(
+                bottom: Radius.circular(30),
+              ),
+            ),
             leading: Padding(
               padding: const EdgeInsets.all(4.0),
               child: CircleAvatar (
@@ -127,8 +131,8 @@ class MobileHome extends StatelessWidget {
                         borderRadius: BorderRadius.circular(40),
                         // if you need this
                         side: BorderSide(
-
-                          width: 0.5,
+                          color: Colors.white10,
+                          width: 0.4,
                         ),
                       ),
                       child: Column(
@@ -136,21 +140,24 @@ class MobileHome extends StatelessWidget {
                         children: [
                           Icon(
                             Icons.sell_rounded,
-                            size: 40,
+                            size: 30,
                             color: Colors.white,
                           ),
-                          Container(
-                            child: Center(
-                              child: Text(
-                                "Seller Details",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 22,
+                          Padding(
+                            padding: const EdgeInsets.only(top: 5),
+                            child: Container(
+                              child: Center(
+                                child: Text(
+                                  "Seller Details",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                  ),
                                 ),
                               ),
+                              // width: 200,
+                              // height: 180,
                             ),
-                            // width: 200,
-                            // height: 180,
                           ),
                         ],
                       ),
@@ -172,7 +179,7 @@ class MobileHome extends StatelessWidget {
                         borderRadius: BorderRadius.circular(40),
                         // if you need this
                         side: BorderSide(
-                          color: Colors.blue.shade900,
+                          color: Colors.white10,
                           width: 1,
                         ),
                       ),
@@ -181,19 +188,22 @@ class MobileHome extends StatelessWidget {
                         children: [
                           Icon(
                             Icons.person,
-                            size: 40,
+                            size: 30,
                           ),
-                          Container(
-                            child: Center(
-                              child: Text(
-                                "User Details",
-                                style: TextStyle(
-                                  fontSize: 22,
+                          Padding(
+                            padding: const EdgeInsets.only(top:5 ),
+                            child: Container(
+                              child: Center(
+                                child: Text(
+                                  "User Details",
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                  ),
                                 ),
                               ),
+                              // width: 200,
+                              // height: 200,
                             ),
-                            // width: 200,
-                            // height: 200,
                           ),
                         ],
                       ),
@@ -217,6 +227,7 @@ class MobileHome extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(40),
                         side: BorderSide(
+                          color: Colors.white10,
                           width: 1,
                         ),
                       ),
@@ -225,20 +236,23 @@ class MobileHome extends StatelessWidget {
                         children: [
                           Icon(
                             Icons.event,
-                            size: 40,
+                            size: 30,
                           ),
-                          Container(
-                            child: Center(
-                              child: Text(
-                                "Event",
-                                style: TextStyle(
-                                  fontSize: 22
-                                  ,
+                          Padding(
+                            padding: const EdgeInsets.only(top: 5),
+                            child: Container(
+                              child: Center(
+                                child: Text(
+                                  "Event",
+                                  style: TextStyle(
+                                    fontSize: 16
+                                    ,
+                                  ),
                                 ),
                               ),
+                              // width: 200,
+                              // height: 100,
                             ),
-                            // width: 200,
-                            // height: 100,
                           ),
                         ],
                       ),
@@ -262,7 +276,7 @@ class MobileHome extends StatelessWidget {
                         borderRadius: BorderRadius.circular(40),
                         // if you need this
                         side: BorderSide(
-                          color: Colors.blue.shade900,
+                          color: Colors.white10,
                           width: 1,
                         ),
                       ),
@@ -271,21 +285,24 @@ class MobileHome extends StatelessWidget {
                         children: [
                           Icon(
                             Icons.post_add,
-                            size: 40,
+                            size: 30,
                             color: Colors.white,
                           ),
-                          Container(
-                            child: Center(
-                              child: Text(
-                                "Post",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 22,
+                          Padding(
+                            padding: const EdgeInsets.only(top: 5),
+                            child: Container(
+                              child: Center(
+                                child: Text(
+                                  "Post",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                  ),
                                 ),
                               ),
+                              // width: 200,
+                              // height: 200,
                             ),
-                            // width: 200,
-                            // height: 200,
                           ),
                         ],
                       ),
@@ -308,6 +325,7 @@ class MobileHome extends StatelessWidget {
                         borderRadius: BorderRadius.circular(40),
                         // if you need this
                         side: BorderSide(
+                          color: Colors.white10,
                           width: 1,
                         ),
                       ),
@@ -316,21 +334,24 @@ class MobileHome extends StatelessWidget {
                         children: [
                           Icon(
                             Icons.class__outlined,
-                            size: 40,
+                            size: 30,
                             color: Colors.white,
                           ),
-                          Container(
-                            child: Center(
-                              child: Text(
-                                "IELTS Classes",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 22,
+                          Padding(
+                            padding: const EdgeInsets.only(top: 5),
+                            child: Container(
+                              child: Center(
+                                child: Text(
+                                  "IELTS Classes",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                  ),
                                 ),
                               ),
+                              // width: 200,
+                              // height: 200,
                             ),
-                            // width: 200,
-                            // height: 200,
                           ),
                         ],
                       ),
@@ -353,7 +374,7 @@ class MobileHome extends StatelessWidget {
                         borderRadius: BorderRadius.circular(40),
                         // if you need this
                         side: BorderSide(
-                          color: Colors.blue.shade900,
+                          color: Colors.white10,
                           width: 1,
                         ),
                       ),
@@ -362,21 +383,23 @@ class MobileHome extends StatelessWidget {
                         children: [
                           Icon(
                             Icons.text_snippet_rounded,
-                            size: 40,
+                            size: 30,
 
                           ),
-                          Container(
-                            child: Center(
-                              child: Text(
-                                "IELTS Test",
-                                style: TextStyle(
-
-                                  fontSize: 22,
+                          Padding(
+                            padding: const EdgeInsets.only(top: 5),
+                            child: Container(
+                              child: Center(
+                                child: Text(
+                                  "IELTS Test",
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                  ),
                                 ),
                               ),
+                              // width: 200,
+                              // height: 200,
                             ),
-                            // width: 200,
-                            // height: 200,
                           ),
                         ],
                       ),
@@ -387,7 +410,7 @@ class MobileHome extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => Seller(),
+                          builder: (context) =>Study(),
                         ),
                       );
                     },
@@ -399,6 +422,7 @@ class MobileHome extends StatelessWidget {
                         // if you need this
                         side: BorderSide(
                           width: 1,
+                          color: Colors.white10,
                         ),
                       ),
                       child: Column(
@@ -406,19 +430,22 @@ class MobileHome extends StatelessWidget {
                         children: [
                           Icon(
                             Icons.book,
-                            size: 40,
+                            size: 30,
                           ),
-                          Container(
-                            child: Center(
-                              child: Text(
-                                "IELTS Data",
-                                style: TextStyle(
-                                  fontSize: 22,
+                          Padding(
+                            padding: const EdgeInsets.only(top: 5),
+                            child: Container(
+                              child: Center(
+                                child: Text(
+                                  "IELTS Data",
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                  ),
                                 ),
                               ),
+                              // width: 200,
+                              // height: 200,
                             ),
-                            // width: 200,
-                            // height: 200,
                           ),
                         ],
                       ),
@@ -443,6 +470,7 @@ class MobileHome extends StatelessWidget {
                         // if you need this
                         side: BorderSide(
                           width: 1,
+                          color: Colors.white10,
                         ),
                       ),
                       child: Column(
@@ -450,21 +478,24 @@ class MobileHome extends StatelessWidget {
                         children: [
                           Icon(
                             Icons.book,
-                            size: 40,
+                            size: 30,
                             color: Colors.white,
                           ),
-                          Container(
-                            child: Center(
-                              child: Text(
-                                "Plans",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 22,
+                          Padding(
+                            padding: const EdgeInsets.only(top: 5),
+                            child: Container(
+                              child: Center(
+                                child: Text(
+                                  "Plans",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                  ),
                                 ),
                               ),
+                              // width: 200,
+                              // height: 200,
                             ),
-                            // width: 200,
-                            // height: 200,
                           ),
                         ],
                       ),
@@ -487,6 +518,7 @@ class MobileHome extends StatelessWidget {
                         borderRadius: BorderRadius.circular(40),
                         // if you need this
                         side: BorderSide(
+                          color: Colors.white10,
                           width: 1,
                         ),
                       ),
@@ -495,21 +527,24 @@ class MobileHome extends StatelessWidget {
                         children: [
                           Icon(
                             Icons.mail_outline_rounded,
-                            size: 40,
+                            size: 30,
                             color: Colors.white,
                           ),
-                          Container(
-                            child: Center(
-                              child: Text(
-                                "My Match",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 22,
+                          Padding(
+                            padding: const EdgeInsets.only(top: 5),
+                            child: Container(
+                              child: Center(
+                                child: Text(
+                                  "My Match",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                  ),
                                 ),
                               ),
+                              // width: 200,
+                              // height: 200,
                             ),
-                            // width: 200,
-                            // height: 200,
                           ),
                         ],
                       ),
@@ -531,6 +566,7 @@ class MobileHome extends StatelessWidget {
                         borderRadius: BorderRadius.circular(40),
                         // if you need this
                         side: BorderSide(
+                          color: Colors.white10,
                           width: 1,
                         ),
                       ),
@@ -539,19 +575,22 @@ class MobileHome extends StatelessWidget {
                         children: [
                           Icon(
                             Icons.map,
-                            size: 40,
+                            size: 30,
                           ),
-                          Container(
-                            child: Center(
-                              child: Text(
-                                "Hot Area Target",
-                                style: TextStyle(
-                                  fontSize: 22,
+                          Padding(
+                            padding: const EdgeInsets.only(top: 5),
+                            child: Container(
+                              child: Center(
+                                child: Text(
+                                  "Hot Area Target",
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                  ),
                                 ),
                               ),
+                              // width: 200,
+                              // height: 200,
                             ),
-                            // width: 200,
-                            // height: 200,
                           ),
                         ],
                       ),
@@ -675,7 +714,7 @@ class DesktopHome extends StatelessWidget {
                                 "Seller Details",
                                 style: TextStyle(
                                   color: Colors.white,
-                                  fontSize: 22,
+                                  fontSize: 16,
                                 ),
                               ),
                             ),
@@ -718,7 +757,7 @@ class DesktopHome extends StatelessWidget {
                               child: Text(
                                 "User Details",
                                 style: TextStyle(
-                                  fontSize: 22,
+                                  fontSize: 16,
                                 ),
                               ),
                             ),
@@ -762,7 +801,7 @@ class DesktopHome extends StatelessWidget {
                               child: Text(
                                 "Event",
                                 style: TextStyle(
-                                  fontSize: 22
+                                  fontSize: 16
                                   ,
                                 ),
                               ),
@@ -810,7 +849,7 @@ class DesktopHome extends StatelessWidget {
                                 "Post",
                                 style: TextStyle(
                                   color: Colors.white,
-                                  fontSize: 22,
+                                  fontSize: 16,
                                 ),
                               ),
                             ),
@@ -855,7 +894,7 @@ class DesktopHome extends StatelessWidget {
                                 "IELTS Classes",
                                 style: TextStyle(
                                   color: Colors.white,
-                                  fontSize: 22,
+                                  fontSize: 16,
                                 ),
                               ),
                             ),
@@ -901,7 +940,7 @@ class DesktopHome extends StatelessWidget {
                                 "IELTS Test",
                                 style: TextStyle(
 
-                                  fontSize: 22,
+                                  fontSize: 16,
                                 ),
                               ),
                             ),
@@ -917,7 +956,7 @@ class DesktopHome extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => Seller(),
+                          builder: (context) => Study(),
                         ),
                       );
                     },
@@ -943,7 +982,7 @@ class DesktopHome extends StatelessWidget {
                               child: Text(
                                 "IELTS Data",
                                 style: TextStyle(
-                                  fontSize: 22,
+                                  fontSize: 16,
                                 ),
                               ),
                             ),
@@ -989,7 +1028,7 @@ class DesktopHome extends StatelessWidget {
                                 "Plans",
                                 style: TextStyle(
                                   color: Colors.white,
-                                  fontSize: 22,
+                                  fontSize: 16,
                                 ),
                               ),
                             ),
@@ -1034,7 +1073,7 @@ class DesktopHome extends StatelessWidget {
                                 "My Match",
                                 style: TextStyle(
                                   color: Colors.white,
-                                  fontSize: 22,
+                                  fontSize: 16,
                                 ),
                               ),
                             ),
@@ -1076,7 +1115,7 @@ class DesktopHome extends StatelessWidget {
                               child: Text(
                                 "Hot Area Target",
                                 style: TextStyle(
-                                  fontSize: 22,
+                                  fontSize: 16 ,
                                 ),
                               ),
                             ),
@@ -1097,12 +1136,16 @@ class DesktopHome extends StatelessWidget {
                   height: 50,width: 130,
                   //color: Color(0xff0d47a1),
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10)
+                      borderRadius: BorderRadius.circular(20)
                   ),
                   child: ElevatedButton(
                     style: ButtonStyle(
-
-                        backgroundColor: MaterialStateColor.resolveWith((states) => Color(0xff0d47a1))
+                        backgroundColor: MaterialStateColor.resolveWith((states) => Color(0xff0d47a1),),
+                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(40.0),
+                    ),
+    ),
                     ),
                     onPressed: () {
                       Navigator.pushReplacement(
@@ -1113,11 +1156,12 @@ class DesktopHome extends StatelessWidget {
 
                     child: Text("Log Out",
                       style: TextStyle(color: Colors.white,
-                          fontSize: 20
+                          fontSize: 18
                       ),
                     ),
                   ),
-                ),),
+                ),
+              ),
             ],
           ),
         ),

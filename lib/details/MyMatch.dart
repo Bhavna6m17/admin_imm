@@ -13,6 +13,11 @@ class _MyMatchState extends State<MyMatch> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            bottom: Radius.circular(30),
+          ),
+        ),
         title: Text('My Match'),
         backgroundColor: Colors.blue.shade900,
       ),

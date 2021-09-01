@@ -50,36 +50,8 @@ class _UserDetailsState extends State<ListDetails> {
       return userModel;
     });
 
-
-    // db.child("Users").orderByChild("type").equalTo("User").once().then((doc) {
-    //    data =doc.value;
-    //    List listData = data[""]
-    //   data.forEach((element) {
-    //     print("`````````````${element[0]["name"]}");
-    //   });
-
-      //print("==================${data.}");
-     //  final docdata =doc.value.toList();
-     //  docdata.forEach((element){
-     //    print("==============================${element}");
-     //
-     //  });
-     // doc.value.forEach((element) {
-     //   print("=====================${element}");
-     //   userList.add(element);
-     // });
-     // print("--------------${userList.length}");
-
-    // });
   }
-//Map<String,dynamic> data = Map<String,dynamic>();
-  // Future<UserModel> getUserData()async{
-  //   DataSnapshot dataSnapshot= await db.child("Users").orderByChild("type").equalTo("User").once();
-  //   data = dataSnapshot.value;
-  //   userModel =UserModel.fromJson(data);
-  //   userList.add(userModel);
-  //   return userModel;
-  // }
+
   @override
   void initState() {
     getData();
@@ -92,6 +64,11 @@ class _UserDetailsState extends State<ListDetails> {
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(50.0), // here the desired height
         child: AppBar(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(
+              bottom: Radius.circular(30),
+            ),
+          ),
           backgroundColor: Colors.blue.shade900,
           title: Text("${widget.type} Details",
             style: TextStyle(fontSize: 20,
@@ -99,9 +76,9 @@ class _UserDetailsState extends State<ListDetails> {
           ),
         ),
       ),
-      body: ListTile(
-        title: FutureBuilder(
-          future:db.child("Users").orderByChild("type").equalTo(widget.type).limitToLast(5).once(),
+      body:
+        FutureBuilder(
+          future:db.child("Users").orderByChild("type").equalTo(widget.type).once(),
 
           builder: (context, AsyncSnapshot<DataSnapshot> snapshot){
 
@@ -121,82 +98,77 @@ class _UserDetailsState extends State<ListDetails> {
                       context,
                       MaterialPageRoute(
                         builder: (context) => UserDetails(
+                          uid:dataSnap[index]['uid'] ,
                           data: dataSnap,
                           type: widget.type,
                           email: dataSnap[index]['email'],
                           name: dataSnap[index]['name'],
                           phone: dataSnap[index]['phone'],
                           profileimg: dataSnap[index]['profileimage'].toString(),
-
-
-                        ),
+                          description: dataSnap[index]["companyDiscription"].toString(),
+                   ),
                       ),
                     );
                   },
                   child: Container(
-                    height: 100,
+                    height: 80,
                     child: (dataSnap[index]['type']==widget.type)?Container(
                       child: Card(
-
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20),
                           // if you need this
                         ),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                flex: 2,
-                                child: Container(
-                                  height: 60,
-                                  width: 60,
-                                  decoration: BoxDecoration(
-                                    image: DecorationImage(
-
-                                      fit: BoxFit.cover,
-                                      scale: 1,
-                                      image:
-                                      dataSnap[index]["profileimage"].toString() == ""?
-                                      AssetImage('images/icons_person.png'):
-                                      NetworkImage(dataSnap[index]["profileimage"]),
+                          child: Expanded(
+                            flex:1,
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  flex:1,
+                                  child: Container(
+                                    height: 40,
+                                    width: 40,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      image: DecorationImage(
+                                        fit: BoxFit.cover,
+                                        scale: 1,
+                                        image:
+                                        dataSnap[index]["profileimage"].toString() == ""?
+                                        AssetImage('images/icons_person.png'):
+                                        NetworkImage(dataSnap[index]["profileimage"]),
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.fromLTRB(10,0,0,10),
-                                child:Column(
-                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      SizedBox(
-                                        width: 300.0,
-                                        child: Text(dataSnap[index]["name"].toString().trimLeft()??" ",
-                                          overflow: TextOverflow.ellipsis,
-                                          softWrap: false,
-                                          maxLines: 1,
-                                          style: TextStyle(fontSize: 20,
+                                Padding(
+                                  padding: const EdgeInsets.fromLTRB(10,0,0,10),
+                                  child:Column(
+                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        SizedBox(
+                                          width: 300.0,
+                                          child: Text(dataSnap[index]["name"].toString().trimLeft()??" ",
+                                            overflow: TextOverflow.ellipsis,
+                                            softWrap: false,
+                                            maxLines: 1,
+                                            style: TextStyle(fontSize: 18,
 
+                                                color: Colors.blue.shade900),
+                                          ),
+                                        ),
+                                        Text(dataSnap[index]["email"]??" ",
+                                          style: TextStyle(fontSize: 18,
                                               color: Colors.blue.shade900),
                                         ),
-                                      ),
-                                      Text(dataSnap[index]["email"]??" ",
-                                        style: TextStyle(fontSize: 17,
-                                            color: Colors.blue.shade900),
-                                      ),
-                                    ]
+                                      ]
+                                  ),
                                 ),
-                              ),
+                              ],
 
-
-                              //  Text("type:${dataSnap[index]["type"]}",
-                              //     style: TextStyle(fontSize: 20,
-                              //     color: Colors.blue.shade900,
-                              //     ),
-                              // ),
-                            ],
-
+                            ),
                           ),
                         ),
                       ),
@@ -210,34 +182,8 @@ class _UserDetailsState extends State<ListDetails> {
           return Center(child: CircularProgressIndicator());
 
           },)
-      ),
 
-      // body: FutureBuilder(
-      //     future: db.child('Users').orderByChild("type").equalTo('User').once(),
-      //     builder: (context,snapshot){
-      //       if(!snapshot.hasData){
-      //         return Center(child: Text("No data here"),);
-      //       }
-      //
-      //       if(snapshot.connectionState== ConnectionState.waiting){
-      //         return Center(child: Text("Loading,..."));
-      //       }
-      //       // if(snapshot.hasData){
-      //       //
-      //       // }
-      //       final users = UserModel.fromJson(
-      //         Map<String, dynamic>.from(
-      //             (snapshot.data as DataSnapshot).value
-      //         ),
-      //       );
-      //       return ListView.builder(
-      //           shrinkWrap: true,
-      //           itemCount: userList.length,
-      //           itemBuilder: (context,index) {
-      //             return Center(child: Container(child: Text(users.user.name.toString())));
-      //           });
-      //       //return Container();
-      //     }),
+
     );
   }
 }

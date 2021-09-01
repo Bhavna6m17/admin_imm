@@ -42,7 +42,8 @@ class _HelloState extends State<Hello> {
 
               ],
               child: MaterialApp(
-                home: Home(),
+                debugShowCheckedModeBanner: false,
+                home: SplashScreen(),
               ),
             );
           }

@@ -15,6 +15,11 @@ class _SellerFormState extends State<SellerForm> {
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(100.0), // here the desired height
           child: AppBar(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.vertical(
+                bottom: Radius.circular(30),
+              ),
+            ),
             backgroundColor: Colors.blue.shade900,
             title: Text(
               "Seller Details",

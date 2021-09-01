@@ -13,6 +13,11 @@ class _TestState extends State<Test> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            bottom: Radius.circular(30),
+          ),
+        ),
         title: Text('Students'),
         backgroundColor: Colors.blue.shade900,
       ),

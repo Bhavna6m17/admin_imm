@@ -1,6 +1,7 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:ia_admin/Forms/PostStatus.dart';
 
 class Posts extends StatefulWidget {
   @override
@@ -8,52 +9,121 @@ class Posts extends StatefulWidget {
 }
 
 class _PostsState extends State<Posts> {
+  var db = FirebaseDatabase.instance.reference();
   List dataSnap = [];
-  DatabaseReference db = FirebaseDatabase.instance.reference();
+
+  fetchData(){
+    db.child("Posts").once().then((DataSnapshot value) {
+      Map<dynamic,dynamic> data =value.value;
+      data.forEach((key, value) {
+        print("-----------${value["date"]}");
+      });
+
+
+    });
+  }
+  @override
+  void initState() {
+    fetchData();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
         appBar: AppBar(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(
+              bottom: Radius.circular(30),
+            ),
+          ),
           title: Text('Posts'),
           backgroundColor: Colors.blue.shade900,
         ),
         body: FutureBuilder<DataSnapshot>(
-          future: db.child("Posts").limitToLast(10).once(),
-          builder: (context,AsyncSnapshot<DataSnapshot> snapshot) {
+          future: db.child("Posts").once(),
+          builder: ( context,AsyncSnapshot<DataSnapshot> snapshot) {
             if(!snapshot.hasData){
               return Center(child: Text("No data here!"));
             }
             if(snapshot.hasError){
               return Center(child: Text(snapshot.error.toString()));
             }
-            if (snapshot.connectionState == ConnectionState.active) {
+            if (snapshot.connectionState == ConnectionState.done) {
               Map<dynamic, dynamic> values = snapshot.data.value;
               values.forEach((key, dat) {
                 dataSnap.add(dat);
                 print("-----------${dataSnap[0]["sellerName"]}");
               });
-              return ListView.builder(
+              return GridView.builder(
+                scrollDirection: Axis.vertical,
+                shrinkWrap: true,
+                gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(maxCrossAxisExtent: 300,
+                childAspectRatio: 3/3,
+                crossAxisSpacing: 20,
+                mainAxisSpacing: 10,),
                 itemBuilder: (context, index) {
+
                   final image = dataSnap[index]["image"].toString();
                   final sellerName = dataSnap[index]["sellerName"].toString();
-                  return Container(
+                  return  GestureDetector(
+                    onTap: (){
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => PostStatus(postImage: dataSnap[index]["image"].toString(),
+                            discription: dataSnap[index]["discription"].toString(),
+                            pid: dataSnap[index]["pid"].toString(),
+                            publisher: dataSnap[index]["publisher"].toString(),
+                          sellerEmail: dataSnap[index]["sellerEmail"].toString(),
+                            slogo: dataSnap[index]["slogo"].toString(),
+                            sellerAddress: dataSnap[index]["sellerAddress"].toString(),
+                            productState: dataSnap[index]["productState"].toString(),
+                            sellerPhone: dataSnap[index]["sellerPhone"].toString(),
+                            sellerName: dataSnap[index]["sellerName"].toString(),
+                          ),
+                        ),
+                      );
+                    },
                     child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                        height: height * 0.25,
-                        child: Column(
-                          children: [
-                            Container(
-                                height: height * 0.13,
-                                child: Image.network(image)),
-                            Text(sellerName),
-                          ],
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      child: Card(
+                        elevation: 1,
+                        child: Container(
+                          //height: height * 0.25,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Expanded(
+                                flex:2,
+                                child: Container(
+                                  // height: 50,
+                                  // width: 50,
+                                  child: Image.network(image,height: 100,),
+                                ),
+                              ),
+                               // Divider(color: Colors.grey,),
+                               Padding(
+                                 padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
+                                 child: Container(
+                                    child: Text(sellerName,
+                                    style: TextStyle(
+                                      textBaseline: TextBaseline.alphabetic,
+                                      color: Colors.blue.shade900,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    ),
+                                  ),
+                               ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
                   );
                 },
+
                 itemCount: dataSnap.length,
               );
             }
@@ -61,6 +131,7 @@ class _PostsState extends State<Posts> {
               child: CircularProgressIndicator(),
             );
           },
-        ));
+        ),
+    );
   }
 }

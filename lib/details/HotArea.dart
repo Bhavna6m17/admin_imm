@@ -13,6 +13,11 @@ class _HotAreasState extends State<HotAreas> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            bottom: Radius.circular(30),
+          ),
+        ),
         title: Text('Highly Target Areas'),
         backgroundColor: Colors.blue.shade900,
       ),
