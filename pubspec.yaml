@@ -37,6 +37,13 @@ dependencies:
   firebase_core: ^0.7.0
   firebase_auth: ^0.20.1
   image_picker : 0.6.7+12
+  pinch_zoom_image_updated: ^0.2.6
+  flutter_slidable: 0.5.7
+  bubble: 1.1.9+1
+  url_launcher: 6.0.0
+  flutter_launcher_icons: 0.9.0
+
+
 
 
 dev_dependencies:
@@ -48,6 +55,17 @@ dev_dependencies:
 
 # The following section is specific to Flutter.
 flutter:
+#  fonts:
+#    - family: Raleway
+#      fonts:
+#        - asset: fonts/Raleway-Regular.ttf
+#        - asset: fonts/Raleway-Italic.ttf
+#          style: italic
+#    - family: RobotoMono
+#      fonts:
+#        - asset: fonts/RobotoMono-Regular.ttf
+#        - asset: fonts/RobotoMono-Bold.ttf
+#          weight: 700
   assets:
     - images/
 

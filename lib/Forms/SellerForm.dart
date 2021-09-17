@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:ia_admin/details/Post.dart';
+import 'package:ia_admin/screen/SplashScreen.dart';
 
 class SellerForm extends StatefulWidget {
   @override
@@ -10,199 +10,102 @@ class SellerForm extends StatefulWidget {
 class _SellerFormState extends State<SellerForm> {
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.height;
+    double height =MediaQuery.of(context).size.width;
 
       return Scaffold(
         appBar: PreferredSize(
-          preferredSize: Size.fromHeight(100.0), // here the desired height
+          preferredSize: Size.fromHeight(60), // here the desired height
           child: AppBar(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.vertical(
-                bottom: Radius.circular(30),
-              ),
-            ),
+            // shape: RoundedRectangleBorder(
+            //   borderRadius: BorderRadius.vertical(
+            //     bottom: Radius.circular(30),
+            //   ),
+            // ),
             backgroundColor: Colors.blue.shade900,
-            title: Text(
-              "Seller Details",
-              style: TextStyle(fontSize: 40, color: Colors.white),
+            title: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 65),
+              child: Text(
+                "Details Updates",
+                style: TextStyle(fontSize: 25, color: Colors.white),
+              ),
             ),
           ),
         ),
           body: ListView(
             children: [
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: GestureDetector(
-                  onTap: (){
-                  },
-                  child: CircleAvatar(
-                    radius: 80,
-                    backgroundImage:  AssetImage('images/icons_person.png'),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 30,
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                    border: Border.all(
-                      color: Colors.grey,
-                      width: 2,
-                    ),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      'Name',
-                      style: TextStyle(
-                        fontSize: 28,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                    border: Border.all(
-                      color: Colors.grey,
-                      width: 2,
-                    ),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      'Phone Number',
-                      style: TextStyle(
-                        fontSize: 28,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                    border: Border.all(
-                      color: Colors.grey,
-                      width: 2,
-                    ),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      'email Id',
-                      style: TextStyle(
-                        fontSize: 28,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                    border: Border.all(
-                      color: Colors.grey,
-                      width: 2,
-                    ),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      'Company Name',
-                      style: TextStyle(
-                        fontSize: 28,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-          SizedBox(
-            height: 90,
-            width: 80,
+          Container(
+          child: Padding(
+          padding: const EdgeInsets.all(8.0),
+        child: TextFormField(
+          decoration: const InputDecoration(
+              border: UnderlineInputBorder(),
+              labelText: 'Enter your username'
           ),
-                Row(children: [
-                  IconButton(
-                    icon: Icon(Icons.add_business_sharp),
-                    iconSize: 70,
-                    color: Colors.grey,
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => Posts(),
-                        ),
-                      );
-                    },
+        ),
+      ),
+    ),
+    Container(
+    child: Padding(
+    padding: const EdgeInsets.all(8.0),
+    child: TextFormField(
+    decoration: const InputDecoration(
+    border: UnderlineInputBorder(),
+    labelText: 'Enter your phone no.',
+      prefix: Text("+91 | "),
+    ),
+      maxLength: 10,
+    ),
+    ),
+    ),
+    Container(
+    child: Padding(
+    padding: const EdgeInsets.all(8.0),
+    child: TextFormField(
+    decoration: const InputDecoration(
+    border: UnderlineInputBorder(),
+    labelText: 'Enter your email ID',
+    ),
+    ),
+    ),
+    ),
+              Container(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextFormField(
+                    decoration: const InputDecoration(
+                        border: UnderlineInputBorder(),
+                        labelText: 'UPI',
+                    ),
                   ),
-                  IconButton(
-                    icon: Icon(Icons.event),
-                    iconSize: 70,
-                    color: Colors.grey,
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => Posts(),
-                        ),
-                      );
-                    },
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.note),
-                    iconSize: 70,
-                    color: Colors.grey,
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => Posts(),
-                        ),
-                      );
-                    },
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.photo),
-                    iconSize: 70,
-                    color: Colors.grey,
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => Posts(),
-                        ),
-                      );
-                    },
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.reviews),
-                    iconSize: 70,
-                    color: Colors.grey,
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => Posts(),
-                        ),
-                      );
-                    },
-                  ),
-                ]
                 ),
+              ),
+              SizedBox(height: 30),
+               Padding(
+                 padding: const EdgeInsets.symmetric(horizontal: 83.0),
+                 child: ConstrainedBox(
+                    constraints: BoxConstraints(
+                      maxHeight: height*0.12,
+                      maxWidth: width*0.8,
+                    ),
+                    child: ElevatedButton(
+                      style: ButtonStyle(
+                          backgroundColor: MaterialStateColor.resolveWith(
+                                  (states) => Color(0xff0d47a1)),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18.0),
+                        ),
+                        ),
+                      ),
+                      onPressed: () {},
+                      child: Text(
+                        "Update",
+                        style: TextStyle(color: Colors.white, fontSize: 18),
+                      ),
+                    ),
+                  ),
+               ),
             ],
           ),
     );

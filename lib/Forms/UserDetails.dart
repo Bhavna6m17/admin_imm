@@ -12,15 +12,17 @@ class UserDetails extends StatefulWidget {
   final String description;
   final String uid;
 
-  const UserDetails(
-      {Key key,
-      this.type,
-      this.name,
-      this.phone,
-      this.profileimg,
-      this.email,
-      this.data, this.description, this.uid,})
-      : super(key: key);
+  const UserDetails({
+    Key key,
+    this.type,
+    this.name,
+    this.phone,
+    this.profileimg,
+    this.email,
+    this.data,
+    this.description,
+    this.uid,
+  }) : super(key: key);
   @override
   _UserDetailsState createState() => _UserDetailsState();
 }
@@ -41,153 +43,148 @@ class _UserDetailsState extends State<UserDetails> {
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 5),
         child: ListView(
-          shrinkWrap:true,
+          shrinkWrap: true,
           children: [
             // Text(widget.data[0]['name']),
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: GestureDetector(
-                onTap: () {
-                  widget.profileimg != ""
-                      ? Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => ViewImage(
-                                    image: widget.profileimg,
-                                  )),
-                        )
-                      : showDialog(
-                    context: context,
-                        builder:(context)=>AlertDialog(
-                          title: Text("No image here!"),
-                          actions: [
-                            ElevatedButton(onPressed: (){
-                              Navigator.pop(context);
-                            }, child: Text("Cancel"))
-                          ],
-
-                        )
-                      );
-                },
-                child: CircleAvatar(
-                    radius: 80,
-                    backgroundImage: widget.profileimg == ""
-                        ? AssetImage('images/icons_person.png')
-                        : NetworkImage(widget.profileimg)),
+                  onTap: () {
+                    widget.profileimg != ""
+                        ? Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ViewImage(
+                                      image: widget.profileimg,
+                                    )),
+                          )
+                        : showDialog(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                                  title: Text("No image here!"),
+                                  actions: [
+                                    ElevatedButton(
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: Text("Cancel"),),
+                                  ],
+                                ));
+                  },
+                  child: ClipRRect(
+                     borderRadius: BorderRadius.circular(5),
+                    child: widget.profileimg == ""
+                        ? Image.asset('images/icons8-person-80.png')
+                        : Image.network(widget.profileimg),
+                  ),
+                  // CircleAvatar(
+                  //     radius: 120,
+                  //     backgroundImage: widget.profileimg == ""
+                  //         ? AssetImage('images/business man icon.png')
+                  //         : NetworkImage(widget.profileimg)),
+                  ),
+            ),
+            // SizedBox(
+            //   height: 30,
+            // ),
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(5),
+                border: Border.all(
+                  color: Colors.grey,
+                  width: 1,
+                ),
+              ),
+              child: Text(
+                widget.name ?? "",
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Colors.black,
+                ),
               ),
             ),
-            SizedBox(
-              height: 30,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  border: Border.all(
-                    color: Colors.grey,
-                    width: 1,
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(5),
+                border: Border.all(
+                  color: Colors.grey,
+                  width: 1,
+                ),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  widget.phone ?? "",
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Colors.black,
                   ),
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+              ),
+            ),
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(5),
+                border: Border.all(
+                  color: Colors.grey,
+                  width: 1,
+                ),
+              ),
+              child: Text(
+                widget.email ?? "",
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Colors.black,
+                ),
+              ),
+            ),
+            widget.type == "User"
+                ? Container()
+                : Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    border: Border.all(
+                      color: Colors.grey,
+                      width: 1,
+                    ),
+                  ),
                   child: Text(
-                    widget.name ?? "",
+                    widget.description ?? "No data",
                     style: TextStyle(
                       fontSize: 18,
                       color: Colors.black,
                     ),
                   ),
                 ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  border: Border.all(
-                    color: Colors.grey,
-                    width: 1,
-                  ),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    widget.phone ?? "",
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: Colors.black,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  border: Border.all(
-                    color: Colors.grey,
-                    width: 1,
-                  ),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    widget.email ?? "",
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: Colors.black,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            widget.type == "User"?Container():Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  border: Border.all(
-                    color: Colors.grey,
-                    width: 1,
-                  ),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    widget.description??"No data",
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: Colors.black,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            widget.type== "Seller"?
-                FutureBuilder(
-                  future: FirebaseDatabase.instance.reference().child("Users").orderByChild("uid").equalTo(widget.uid).once(),
-                    builder: (context, AsyncSnapshot<DataSnapshot> snapshot){
-                      List dataSnap =[];
-                    if(snapshot.connectionState == ConnectionState.active){
-                      Map<dynamic, dynamic> values =snapshot.data.value;
-                      values.forEach((key, dat) {
-
-                        dataSnap.add(dat);
-
-                      });
-                      return GridView.builder(gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(maxCrossAxisExtent: 3/2), itemBuilder: (context,index){
-                        return Container(
-                          child: Image.network(dataSnap[index]['profileimage']),
-                        );
-                      });
-                    }
-                    return Center(child: CircularProgressIndicator());
-
-                    }):Container()
+            widget.type == "Seller"
+                ? FutureBuilder(
+                    future: FirebaseDatabase.instance
+                        .reference()
+                        .child("Users")
+                        .orderByChild("uid")
+                        .equalTo(widget.uid)
+                        .once(),
+                    builder: (context, AsyncSnapshot<DataSnapshot> snapshot) {
+                      List dataSnap = [];
+                      if (snapshot.connectionState == ConnectionState.active) {
+                        Map<dynamic, dynamic> values = snapshot.data.value;
+                        values.forEach((key, dat) {
+                          dataSnap.add(dat);
+                        });
+                        return GridView.builder(
+                            gridDelegate:
+                                SliverGridDelegateWithMaxCrossAxisExtent(
+                                    maxCrossAxisExtent: 3 / 2),
+                            itemBuilder: (context, index) {
+                              return Container(
+                                child: Image.network(
+                                    dataSnap[index]['profileimage']),
+                              );
+                            });
+                      }
+                      return Center(child: CircularProgressIndicator());
+                    })
+                : Container()
             // Container(
             //   child: ElevatedButton(
             //     style: ButtonStyle(
@@ -240,7 +237,6 @@ class _UserDetailsState extends State<UserDetails> {
       //     ),
       //   ],
       // ),
-
     );
   }
 }

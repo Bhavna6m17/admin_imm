@@ -1,82 +1,64 @@
 import 'package:firebase_database/firebase_database.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class PostStatus extends StatefulWidget {
-  final String postImage;
-  final String sellerPhone;
-  final String sellerAddress;
-  final String sellerEmail;
-  final String slogo;
-  final String discription;
-  final String publisher;
-  final String pid;
-  final String productState;
-  final String sellerName;
-
-
-  const PostStatus({Key key, this.postImage, this.sellerPhone, this.sellerAddress, this.sellerEmail, this.slogo, this.discription, this.publisher, this.pid, this.productState, this.sellerName}) : super(key: key);
+class BuyPostStatus extends StatefulWidget {
+  String name;
+  String buyerPhone;
+  String buyerEmail;
+  String address;
+  String description;
+  String designation;
+  String imageprofileimage;
+  String image;
+  String pid;
+  BuyPostStatus({Key key,this.pid,this.name,this.buyerPhone,this.buyerEmail,this.address,this.description,this.designation,this.imageprofileimage,this.image});
 
   @override
-  _PostStatusState createState() => _PostStatusState();
+  _BuyPostStatusState createState() => _BuyPostStatusState();
 }
 
-class _PostStatusState extends State<PostStatus> {
-  var db= FirebaseDatabase.instance.reference();
-
-  updateApprovePost(){
-    db.child("Posts").child(widget.pid).update({"productState":"Approved"}).whenComplete(() => print("Updated!")).catchError((onError){
-      print("]-----error-----$onError");
-    });
-  }
-  updateDeletePost(){
-    db.child("Posts").child(widget.pid).remove().whenComplete(() => print("Updated!")).catchError((onError){
-      print("]-----error-----$onError");
-    });
-  }
-  updateUnApprovePost(){
-    db.child("Posts").child(widget.pid).update({"productState":"Unapproved"}).whenComplete(() => print("Updated!")).catchError((onError){
-      print("]-----error-----$onError");
-    });
-  }
+class _BuyPostStatusState extends State<BuyPostStatus> {
+  DatabaseReference db= FirebaseDatabase.instance.reference();
   @override
   Widget build(BuildContext context) {
+    db.child('BuyerPosts');
     return SafeArea(
       child: Scaffold(
         body: SingleChildScrollView(
           child:
           Column(
             children: [
-              Container(
-                height: 400,
-                width: 800,
-                child: InteractiveViewer(
-                  maxScale: 5,
-                  child: Image.network(widget.postImage,
+              InteractiveViewer(
+                maxScale: 5.0,
+                child: Container(
+                  height: 400,
+                  width: 800,
+                  child: Image.network(widget.image,
                   ),
                 ),
               ),
+              SizedBox(height: 15,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Container(
-                   // color: Color(0xff0d47a1),
+                    // color: Color(0xff0d47a1),
                     height: 35,
                     // width: 130,
                     child: ElevatedButton(
                       style: ButtonStyle(
-                          backgroundColor: MaterialStateColor.resolveWith(
-                                  (states) => Color(0xff0d47a1),),
-                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(18.0),
+                        backgroundColor: MaterialStateColor.resolveWith(
+                              (states) => Color(0xff0d47a1),),
+                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18.0),
 
-                              ),
+                          ),
 
-        ),
+                        ),
                       ),
                       onPressed: () {
-                        updateApprovePost();
+                        
                       },
                       child: Text(
                         "Approve",
@@ -102,10 +84,9 @@ class _PostStatusState extends State<PostStatus> {
                         ),
                       ),
                       onPressed: () {
-                        updateUnApprovePost();
                       },
                       child: Text(
-                        "Unapproved",
+                        "Unapprove",
                         style: TextStyle(color: Colors.white, fontSize: 18),
                       ),
                     ),
@@ -128,7 +109,6 @@ class _PostStatusState extends State<PostStatus> {
                         ),
                       ),
                       onPressed: () {
-                        updateDeletePost();
                       },
                       child: Text(
                         "Delete",
@@ -141,7 +121,7 @@ class _PostStatusState extends State<PostStatus> {
               SizedBox(height: 20,),
               Center(
                 child: Text(
-                  "Seller Details",
+                  "Buyer Details",
                   style: TextStyle(color: Colors.black, fontSize: 30),
                 ),
               ),
@@ -157,15 +137,15 @@ class _PostStatusState extends State<PostStatus> {
                           Padding(
                             padding: const EdgeInsets.only(top: 5, bottom: 5),
                             child: Container(
-                                  height: 100,
-                                  width: 150,
-                                  decoration: BoxDecoration(shape: BoxShape.circle,
-                                  image: DecorationImage(image:NetworkImage(widget.slogo
-                                  ),
-                                    fit: BoxFit.cover,
-                                  ),),
+                              height: 100,
+                              width: 150,
+                              decoration: BoxDecoration(shape: BoxShape.circle,
+                                image: DecorationImage(image:NetworkImage(widget.imageprofileimage
+                                ),
+                                  fit: BoxFit.cover,
+                                ),),
 
-                              ),
+                            ),
                           ),
 
                           Flexible(
@@ -177,7 +157,7 @@ class _PostStatusState extends State<PostStatus> {
                                   padding: const EdgeInsets.all(4.0),
                                   child:
                                   Text(
-                                    widget.sellerName,
+                                    widget.name,
                                     textDirection: TextDirection.ltr,
                                     style: TextStyle(
                                       fontSize: 15,
@@ -189,7 +169,7 @@ class _PostStatusState extends State<PostStatus> {
                                 Padding(
                                   padding: const EdgeInsets.all(4.0),
                                   child: Text(
-                                    widget.sellerPhone,
+                                    widget.buyerPhone,
                                     style: TextStyle(
                                       fontSize: 15,
                                       color: Colors.black,
@@ -200,7 +180,7 @@ class _PostStatusState extends State<PostStatus> {
                                 Padding(
                                   padding: const EdgeInsets.all(4.0),
                                   child: Text(
-                                    widget.sellerEmail,
+                                    widget.buyerEmail,
                                     textDirection: TextDirection.ltr,
                                     style: TextStyle(
                                       fontSize: 15,
@@ -219,7 +199,7 @@ class _PostStatusState extends State<PostStatus> {
                   Padding(
                     padding: const EdgeInsets.all(4.0),
                     child: Text(
-                      widget.discription,
+                      widget.description,
                       style: TextStyle(
                         fontSize: 15,
                         color: Colors.black,
@@ -230,14 +210,14 @@ class _PostStatusState extends State<PostStatus> {
                   Padding(
                     padding: const EdgeInsets.all(4.0),
                     child: Text(
-                      widget.productState,
+                      widget.designation,
                       style: TextStyle(
                         fontSize: 15,
                         color: Colors.black,
                       ),
                     ),
                   ),
-            ],
+                ],
               ),
             ],
           ),

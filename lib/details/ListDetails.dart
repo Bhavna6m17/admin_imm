@@ -1,7 +1,9 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:ia_admin/Forms/UserDetails.dart';
+import 'package:ia_admin/Forms/chat_page.dart';
 import 'package:ia_admin/Models/UserModel.dart';
+import 'package:url_launcher/url_launcher.dart';
 class ListDetails extends StatefulWidget {
   final String type;
 
@@ -19,7 +21,7 @@ class _UserDetailsState extends State<ListDetails> {
   String name;
  // int index;
   String user;
-
+  String phoneNo;
 
 
   var dataa;
@@ -51,6 +53,15 @@ class _UserDetailsState extends State<ListDetails> {
     });
 
   }
+  _makingPhoneCall(String phoneNo) async {
+    String url = 'tel:$phoneNo';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
 
   @override
   void initState() {
@@ -92,88 +103,166 @@ class _UserDetailsState extends State<ListDetails> {
             return ListView.builder(
              // reverse: true,
               itemBuilder: (context,index){
-                return GestureDetector(
-                  onTap: (){
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => UserDetails(
-                          uid:dataSnap[index]['uid'] ,
-                          data: dataSnap,
-                          type: widget.type,
-                          email: dataSnap[index]['email'],
-                          name: dataSnap[index]['name'],
-                          phone: dataSnap[index]['phone'],
-                          profileimg: dataSnap[index]['profileimage'].toString(),
-                          description: dataSnap[index]["companyDiscription"].toString(),
-                   ),
+                return Container(
+                  height: 120,
+                  child: (dataSnap[index]['type']==widget.type)?Container(
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                        // if you need this
                       ),
-                    );
-                  },
-                  child: Container(
-                    height: 80,
-                    child: (dataSnap[index]['type']==widget.type)?Container(
-                      child: Card(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                          // if you need this
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
-                          child: Expanded(
-                            flex:1,
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  flex:1,
-                                  child: Container(
-                                    height: 40,
-                                    width: 40,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      image: DecorationImage(
-                                        fit: BoxFit.cover,
-                                        scale: 1,
-                                        image:
-                                        dataSnap[index]["profileimage"].toString() == ""?
-                                        AssetImage('images/icons_person.png'):
-                                        NetworkImage(dataSnap[index]["profileimage"]),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              flex: 2,
+                              child: Container(
+                                height: 80,
+                                width: 150,
+                                decoration: BoxDecoration(
+                                   borderRadius: BorderRadius.circular(0.3),
+                                  image: DecorationImage(
+                                    fit: BoxFit.cover,
+                                    image:
+                                    dataSnap[index]["profileimage"].toString() == ""?
+                                    AssetImage('images/icons8-person-80.png'):
+                                    NetworkImage(dataSnap[index]["profileimage"]),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(10,0,0,10),
+                              child:Column(
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    SizedBox(
+                                      width: 250.0,
+                                      child: Text(dataSnap[index]["name"].toString().trimLeft()??" ",
+                                        overflow: TextOverflow.ellipsis,
+                                        softWrap: false,
+                                        maxLines: 1,
+                                        style: TextStyle(fontSize: 22,
+                                            fontWeight: FontWeight.bold,
+
+                                            color: Colors.blue.shade900),
                                       ),
                                     ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.fromLTRB(10,0,0,10),
-                                  child:Column(
-                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                    Text(dataSnap[index]["address"]??" ",
+                                      style: TextStyle(fontSize: 14,
+                                          color: Colors.black,
+                                      fontWeight: FontWeight.bold
+                                      ),
+                                    ),
+                                    //SizedBox(height: 3,),
+                                    Row(
+                                      crossAxisAlignment: CrossAxisAlignment.center,
                                       children: [
-                                        SizedBox(
-                                          width: 300.0,
-                                          child: Text(dataSnap[index]["name"].toString().trimLeft()??" ",
-                                            overflow: TextOverflow.ellipsis,
-                                            softWrap: false,
-                                            maxLines: 1,
-                                            style: TextStyle(fontSize: 18,
+                                        IconButton(
+                                          onPressed: (){
+                                          _makingPhoneCall(dataSnap[index]['phone']);
 
-                                                color: Colors.blue.shade900),
+                                        },
+                                          icon:Icon(
+                                            Icons.call,
+
+                                            color: Colors.blue.shade900,
+                                            size: 30,
+                                          ),),
+
+                                        // SizedBox(width: 20,),
+                                        IconButton(onPressed: (){
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                              builder: (context) => chatbot(
+                                                image: dataSnap[index]['profileimage'].toString(),
+                                                name: dataSnap[index]['name'].toString(),
+                                              ),),
+                                          );
+                                        },
+                                          icon:Icon(
+                                          Icons.message_sharp,
+                                          color: Colors.blue.shade900,
+                                          size: 30,
+                                        ),),
+
+                                        //SizedBox(width: 20,),
+                                        ElevatedButton(
+                                          style: ButtonStyle(
+                                            backgroundColor: MaterialStateColor.resolveWith(
+                                                  (states) => Color(0xff0d47a1),),
+                                            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                              RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.circular(18.0),
+
                                           ),
-                                        ),
-                                        Text(dataSnap[index]["email"]??" ",
-                                          style: TextStyle(fontSize: 18,
-                                              color: Colors.blue.shade900),
-                                        ),
-                                      ]
-                                  ),
-                                ),
-                              ],
+                                            ),
+                                          ),
+                                          onPressed: () {
 
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) => UserDetails(
+                                                    uid:dataSnap[index]['uid'] ,
+                                                    data: dataSnap,
+                                                    type: widget.type,
+                                                    email: dataSnap[index]['address'],
+                                                    name: dataSnap[index]['name'],
+                                                    phone: dataSnap[index]['phone'],
+                                                    profileimg: dataSnap[index]['profileimage'].toString(),
+                                                    description: dataSnap[index]["companyDiscription"].toString(),
+                                                  ),
+                                                ),
+                                              );
+
+                                          },
+                                          child: Text("ViewDetails",
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 18,
+                                            color: Colors.white,
+                                            // backgroundColor: Colors.blue.shade900,
+                                          ),
+                                          ),
+
+                                        ),
+                                        // Text('VeiwDetails',
+                                        // style: TextStyle(
+                                        //   color: Colors.blue.shade900,
+                                        //   fontWeight: FontWeight.bold,
+                                        //   fontSize: 20,
+                                        // ),
+                                        // ),
+                                      ],
+                                    ),
+                                  ]
+                              ),
                             ),
-                          ),
+                            // Column(
+                            //   children: [
+                            //     Icon(
+                            //       Icons.call,
+                            //       color: Colors.blue.shade900,
+                            //       size: 30,
+                            //       // color: Colors.white,
+                            //     ),
+                            //     Icon(
+                            //       Icons.message_sharp,
+                            //       color: Colors.blue.shade900,
+                            //       size: 30,
+                            //       // color: Colors.white,
+                            //     ),
+                            //   ],
+                            // ),
+                          ],
                         ),
                       ),
-                    ):Container(),),
-                );
+                    ),
+                  ):Container(),);
               },
               itemCount: dataSnap.length,
 
