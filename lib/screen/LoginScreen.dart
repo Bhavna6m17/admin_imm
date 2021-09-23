@@ -102,81 +102,14 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: ScreenTypeLayout(
-          mobile: SafeArea(
-        child: Scaffold(
-          body: SingleChildScrollView(
-            child: Align(
-              alignment: Alignment.topCenter,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    height: 50,
-                  ),
-                  Image.asset(
-                    "images/logo.jpeg",
-                    height: 190,
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Text(
-                    "Login Here!",
-                    style: TextStyle(
-                      fontSize: 35,
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xff0d47a1),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 100,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: TextField(
-                      controller:
-                          Provider.of<AuthProvider>(context, listen: false)
-                              .phoneController,
-                      style: TextStyle(
-                        fontSize: 26,
-                      ),
-                      maxLength: 10,
-                      keyboardType: TextInputType.phone,
-                      decoration: InputDecoration(
-                          hintText: "Enter your mobile number",
-                          prefix: Text("+91 | "),
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(22.0))),
-                    ),
-                  ),
-                  Container(
-                    color: Color(0xff0d47a1),
-                    height: 50,
-                    width: 130,
-                    child: ElevatedButton(
-                      style: ButtonStyle(
-                          backgroundColor: MaterialStateColor.resolveWith(
-                              (states) => Color(0xff0d47a1))),
-                      onPressed: () {
-                        verifyPhone(context);
-                      },
-                      child: Text(
-                        "Next",
-                        style: TextStyle(color: Colors.white, fontSize: 23),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
-          desktop: SafeArea(child: Scaffold(
-
-            body: Column(
+    return ScreenTypeLayout(
+        mobile: SafeArea(
+      child: Scaffold(
+        body: SingleChildScrollView(
+          child: Align(
+            alignment: Alignment.topCenter,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SizedBox(
                   height: 50,
@@ -196,14 +129,26 @@ class _LoginState extends State<Login> {
                     color: Color(0xff0d47a1),
                   ),
                 ),
-                TextField(
-                  controller: webTextController,
-                  decoration: InputDecoration(
-                    prefix: Text(countryCode)
-                  ),
-                ),
                 SizedBox(
-                  height: 20,
+                  height: 80,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextField(
+                    controller:
+                        Provider.of<AuthProvider>(context, listen: false)
+                            .phoneController,
+                    style: TextStyle(
+                      fontSize: 26,
+                    ),
+                    maxLength: 10,
+                    keyboardType: TextInputType.phone,
+                    decoration: InputDecoration(
+                        hintText: "Enter your mobile number",
+                        prefix: Text("+91 | "),
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(22.0))),
+                  ),
                 ),
                 Container(
                   color: Color(0xff0d47a1),
@@ -212,11 +157,9 @@ class _LoginState extends State<Login> {
                   child: ElevatedButton(
                     style: ButtonStyle(
                         backgroundColor: MaterialStateColor.resolveWith(
-                                (states) => Color(0xff0d47a1))),
+                            (states) => Color(0xff0d47a1))),
                     onPressed: () {
-                              verifyForWeb();
-                              _showDialog(context);
-
+                      verifyPhone(context);
                     },
                     child: Text(
                       "Next",
@@ -227,8 +170,63 @@ class _LoginState extends State<Login> {
               ],
             ),
           ),
-          ),
+        ),
       ),
+    ),
+        desktop: SafeArea(child: Scaffold(
+
+          body: Column(
+            children: [
+              SizedBox(
+                height: 50,
+              ),
+              Image.asset(
+                "images/logo.jpeg",
+                height: 190,
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Text(
+                "Login Here!",
+                style: TextStyle(
+                  fontSize: 35,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xff0d47a1),
+                ),
+              ),
+              TextField(
+                controller: webTextController,
+                decoration: InputDecoration(
+                  prefix: Text(countryCode)
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Container(
+                color: Color(0xff0d47a1),
+                height: 50,
+                width: 130,
+                child: ElevatedButton(
+                  style: ButtonStyle(
+                      backgroundColor: MaterialStateColor.resolveWith(
+                              (states) => Color(0xff0d47a1))),
+                  onPressed: () {
+                            verifyForWeb();
+                            _showDialog(context);
+
+                  },
+                  child: Text(
+                    "Next",
+                    style: TextStyle(color: Colors.white, fontSize: 23),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        ),
     );
 
   }

@@ -11,6 +11,7 @@ class UserDetails extends StatefulWidget {
   final List data;
   final String description;
   final String uid;
+  final List officeGallery;
 
   const UserDetails({
     Key key,
@@ -21,13 +22,14 @@ class UserDetails extends StatefulWidget {
     this.email,
     this.data,
     this.description,
-    this.uid,
+    this.uid, this.officeGallery,
   }) : super(key: key);
   @override
   _UserDetailsState createState() => _UserDetailsState();
 }
 
 class _UserDetailsState extends State<UserDetails> {
+  List dataSnap = [];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,7 +47,7 @@ class _UserDetailsState extends State<UserDetails> {
         child: ListView(
           shrinkWrap: true,
           children: [
-            // Text(widget.data[0]['name']),
+             Text(widget.officeGallery.toString()),
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: GestureDetector(
@@ -87,73 +89,24 @@ class _UserDetailsState extends State<UserDetails> {
             // SizedBox(
             //   height: 30,
             // ),
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5),
-                border: Border.all(
-                  color: Colors.grey,
-                  width: 1,
-                ),
-              ),
-              child: Text(
-                widget.name ?? "",
-                style: TextStyle(
-                  fontSize: 18,
-                  color: Colors.black,
-                ),
-              ),
+            TextFormField(
+              initialValue:  widget.name ?? "",
+              decoration: InputDecoration(labelText: "Name"),
+
             ),
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5),
-                border: Border.all(
-                  color: Colors.grey,
-                  width: 1,
-                ),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  widget.phone ?? "",
+      TextFormField(
+        initialValue:  widget.phone ?? "",
+        decoration: InputDecoration(labelText: "Phone"),),
+      TextFormField(
+        initialValue:  widget.email ?? "",
+        decoration: InputDecoration(labelText: "Email"),),
+            widget.type == "User"
+                ? Container()
+                : Text(
+                  widget.description ?? "No data",
                   style: TextStyle(
                     fontSize: 18,
                     color: Colors.black,
-                  ),
-                ),
-              ),
-            ),
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5),
-                border: Border.all(
-                  color: Colors.grey,
-                  width: 1,
-                ),
-              ),
-              child: Text(
-                widget.email ?? "",
-                style: TextStyle(
-                  fontSize: 18,
-                  color: Colors.black,
-                ),
-              ),
-            ),
-            widget.type == "User"
-                ? Container()
-                : Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                    border: Border.all(
-                      color: Colors.grey,
-                      width: 1,
-                    ),
-                  ),
-                  child: Text(
-                    widget.description ?? "No data",
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: Colors.black,
-                    ),
                   ),
                 ),
             widget.type == "Seller"
@@ -165,22 +118,26 @@ class _UserDetailsState extends State<UserDetails> {
                         .equalTo(widget.uid)
                         .once(),
                     builder: (context, AsyncSnapshot<DataSnapshot> snapshot) {
-                      List dataSnap = [];
+
                       if (snapshot.connectionState == ConnectionState.active) {
                         Map<dynamic, dynamic> values = snapshot.data.value;
                         values.forEach((key, dat) {
                           dataSnap.add(dat);
                         });
-                        return GridView.builder(
-                            gridDelegate:
-                                SliverGridDelegateWithMaxCrossAxisExtent(
-                                    maxCrossAxisExtent: 3 / 2),
-                            itemBuilder: (context, index) {
-                              return Container(
-                                child: Image.network(
-                                    dataSnap[index]['profileimage']),
-                              );
-                            });
+                        return Column(
+                          children: [
+                            GridView.builder(
+                                gridDelegate:
+                                    SliverGridDelegateWithMaxCrossAxisExtent(
+                                        maxCrossAxisExtent: 3 / 2),
+                                itemBuilder: (context, index) {
+                                  return Container(
+                                    child: Image.network(
+                                        dataSnap[index]['officeGallery'][index]),
+                                  );
+                                }),
+                          ],
+                        );
                       }
                       return Center(child: CircularProgressIndicator());
                     })

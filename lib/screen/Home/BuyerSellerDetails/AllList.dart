@@ -1,7 +1,7 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:ia_admin/Forms/UserDetails.dart';
-import 'package:ia_admin/Forms/chat_page.dart';
+import 'package:ia_admin/screen/Contacts/chat_page.dart';
+import 'package:ia_admin/screen/Home/seller/SellerDetails/SellerDetails.dart';
 import 'package:ia_admin/Models/UserModel.dart';
 import 'package:url_launcher/url_launcher.dart';
 class ListDetails extends StatefulWidget {
@@ -207,6 +207,7 @@ class _UserDetailsState extends State<ListDetails> {
                                                 context,
                                                 MaterialPageRoute(
                                                   builder: (context) => UserDetails(
+                                                    officeGallery: dataSnap[index]["officeGallery"],
                                                     uid:dataSnap[index]['uid'] ,
                                                     data: dataSnap,
                                                     type: widget.type,

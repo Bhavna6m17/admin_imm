@@ -1,7 +1,14 @@
+import 'dart:convert';
+
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:ia_admin/Forms/BuyerPostStatus.dart';
-import 'package:ia_admin/Forms/PostStatus.dart';
+import 'package:ia_admin/Models/PostModel.dart';
+import 'package:ia_admin/Models/PostModel.dart';
+import 'package:ia_admin/Models/PostModel.dart';
+import 'package:ia_admin/Models/PostModel.dart';
+import 'package:ia_admin/screen/Home/Buyer/BuyerPost/BuyerPostStatus.dart';
+import 'package:ia_admin/screen/Home/seller/SellerPost/SellerPostStatus.dart';
+import 'package:http/http.dart';
 
 class BuyerPost extends StatefulWidget {
   const BuyerPost({Key key}) : super(key: key);
@@ -94,17 +101,21 @@ class _BuyerPostState extends State<BuyerPost> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Container(
-                            // height: 50,
-                            // width: 50,
-                            child: Image.network(
-                              image,
-                              height: height*0.2,
-                              width: width,
-                              fit: BoxFit.contain,
+                          Expanded(
+                            flex: 1,
+                            child: Container(
+                              // height: 50,
+                              // width: 50,
+                              child: Image.network(
+                                image,
+                                height: height*0.2,
+                                width: width,
+                                fit: BoxFit.contain,
+                              ),
                             ),
                           ),
-                          Container(
+                          FittedBox(
+                            fit: BoxFit.contain,
                             child: Text(
                               sellerName,
                               style: TextStyle(
@@ -122,7 +133,7 @@ class _BuyerPostState extends State<BuyerPost> {
                 );
               },
               itemCount: dataSnap.length,
-            );
+             );
           }
           return Center(
             child: CircularProgressIndicator(),

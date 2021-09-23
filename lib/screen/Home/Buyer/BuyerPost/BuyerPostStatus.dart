@@ -19,6 +19,43 @@ class BuyPostStatus extends StatefulWidget {
 
 class _BuyPostStatusState extends State<BuyPostStatus> {
   DatabaseReference db= FirebaseDatabase.instance.reference();
+  showSnackBar(String message){
+    final snackBar= SnackBar(content: Text(message),);
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
+  updateApprovePost() {
+    db
+        .child("BuyerPosts")
+        .child(widget.pid)
+        .update({"productState": "Approved"})
+        .whenComplete(() => showSnackBar("Post is Approved!"))
+        .catchError((onError) {
+      print("]-----error-----$onError");
+    });
+  }
+
+  updateDeletePost() {
+    db
+        .child("BuyerPosts")
+        .child(widget.pid)
+        .remove()
+        .whenComplete(() => showSnackBar("Post is deleted!"))
+        .catchError((onError) {
+      print("]-----error-----$onError");
+    });
+  }
+
+  updateUnApprovePost() {
+    db
+        .child("BuyerPosts")
+        .child(widget.pid)
+        .update({"productState": "Unapproved"})
+        .whenComplete(() => showSnackBar("Post is UnApproved!"))
+        .catchError((onError) {
+      print("]-----error-----$onError");
+    });
+  }
   @override
   Widget build(BuildContext context) {
     db.child('BuyerPosts');
@@ -58,6 +95,7 @@ class _BuyPostStatusState extends State<BuyPostStatus> {
                         ),
                       ),
                       onPressed: () {
+                        updateApprovePost();
                         
                       },
                       child: Text(
@@ -84,6 +122,7 @@ class _BuyPostStatusState extends State<BuyPostStatus> {
                         ),
                       ),
                       onPressed: () {
+                        updateUnApprovePost();
                       },
                       child: Text(
                         "Unapprove",
@@ -109,6 +148,7 @@ class _BuyPostStatusState extends State<BuyPostStatus> {
                         ),
                       ),
                       onPressed: () {
+                        updateDeletePost();
                       },
                       child: Text(
                         "Delete",

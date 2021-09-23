@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ia_admin/provider/auth_provider.dart';
 import 'package:provider/provider.dart';
 
-import 'Home.dart';
+import 'Home/Home.dart';
 
 class OtpaScreen extends StatefulWidget {
 

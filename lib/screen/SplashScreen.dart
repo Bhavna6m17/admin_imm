@@ -4,7 +4,7 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:ia_admin/screen/Home.dart';
+import 'package:ia_admin/screen/Home/Home.dart';
 
 import 'LoginScreen.dart';
 
@@ -21,7 +21,7 @@ class _SplashScreenState extends State<SplashScreen> {
   
     super.initState();
     Timer(Duration(seconds: 3),(){
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>decider(),),);
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>Login()),);
     });
   }
 

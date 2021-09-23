@@ -2,13 +2,17 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:ia_admin/Forms/SellerForm.dart';
-import 'package:ia_admin/Forms/SellerPost.dart';
-import 'package:ia_admin/Forms/UserDetails.dart';
-import 'package:ia_admin/Forms/chat_page.dart';
-import 'package:ia_admin/details/IletsTest.dart';
+import 'package:ia_admin/screen/Contacts/Stream.dart';
+import 'package:ia_admin/screen/Contacts/chat_page.dart';
+import 'package:ia_admin/screen/Home/VDO/VideoList.dart';
+import 'package:ia_admin/screen/Home/VDO/videoDemo.dart';
+import 'package:ia_admin/screen/Home/seller/SellerDetails/SellerForm.dart';
+import 'package:ia_admin/screen/Home/seller/SellerPost/SellerPost.dart';
+import 'package:ia_admin/screen/Home/seller/SellerDetails/SellerDetails.dart';
+import 'package:ia_admin/screen/Home/IletsTest.dart';
 import 'package:ia_admin/provider/auth_provider.dart';
-import 'package:ia_admin/screen/Home.dart';
+import 'package:ia_admin/screen/Home/Home.dart';
+import 'package:ia_admin/screen/Home/seller/SellerPost/SellerPostStatus.dart';
 import 'package:ia_admin/screen/SplashScreen.dart';
 import 'package:provider/provider.dart';
 
@@ -47,7 +51,7 @@ class _HelloState extends State<Hello> {
               ],
               child: MaterialApp(
                 debugShowCheckedModeBanner: false,
-                home: Home(),
+                home: VideoViewer(),
               ),
             );
           }

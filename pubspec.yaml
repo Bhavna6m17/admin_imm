@@ -37,11 +37,13 @@ dependencies:
   firebase_core: ^0.7.0
   firebase_auth: ^0.20.1
   image_picker : 0.6.7+12
-  pinch_zoom_image_updated: ^0.2.6
+
   flutter_slidable: 0.5.7
   bubble: 1.1.9+1
   url_launcher: 6.0.0
   flutter_launcher_icons: 0.9.0
+  video_player: 1.0.1
+
 
 
 
