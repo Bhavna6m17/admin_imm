@@ -169,58 +169,6 @@ class MobileHome extends StatelessWidget {
                   crossAxisCount: 2,
                   padding: EdgeInsets.all(10),
                   children: [
-                    // GestureDetector(
-                    //   onTap: () {
-                    //     Navigator.push(
-                    //       context,
-                    //       MaterialPageRoute(
-                    //         builder: (context) => SellerPost(),
-                    //       ),
-                    //     );
-                    //   },
-                    //   child: Card(
-                    //     color: Color(0xff0d47a1),
-                    //     margin:
-                    //     EdgeInsets.symmetric(vertical: 16, horizontal: 10),
-                    //
-                    //     shape: RoundedRectangleBorder(
-                    //       borderRadius: BorderRadius.circular(20),
-                    //       // if you need this
-                    //       side: BorderSide(
-                    //         color: Colors.white10,
-                    //         width: 1,
-                    //       ),
-                    //     ),
-                    //     child: Column(
-                    //       mainAxisAlignment: MainAxisAlignment.center,
-                    //       children: [
-                    //         Icon(
-                    //           Icons.post_add,
-                    //           size: 30,
-                    //           color: Colors.white,
-                    //         ),
-                    //         Padding(
-                    //           padding: const EdgeInsets.only(top: 5),
-                    //           child: Container(
-                    //             child: Center(
-                    //               child: Text(
-                    //                 "Seller Panel",
-                    //                 style: TextStyle(
-                    //                   color: Colors.white,
-                    //                   fontWeight: FontWeight.bold,
-                    //                   fontSize: 22,
-                    //                 ),
-                    //               ),
-                    //             ),
-                    //             // width: 200,
-                    //             // height: 200,
-                    //           ),
-                    //         ),
-                    //       ],
-                    //     ),
-                    //   ),
-                    // ),
-
                     FeaturedList(
                         onTap: () {},
                         title: 'New Registration',
