@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "849395698067",
+    "firebase_url": "https://iaadmin-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "iaadmin",
+    "storage_bucket": "iaadmin.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:849395698067:android:59190767df3f461c8a8066",
+        "android_client_info": {
+          "package_name": "com.immigrationadda.ia_admin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "849395698067-r81iicrahkk5nnsa9cep05l8svamch2s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.immigrationadda.ia_admin",
+            "certificate_hash": "87491f316c5786ea8d3354693860a63a5b1ef4d5"
+          }
+        },
+        {
+          "client_id": "849395698067-l5l23m1hms15usd8fml1j9t3fs1kpgdh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDhmPCKgXCNrT8-aB_HMgAg-E0K2NNc5zw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "849395698067-l5l23m1hms15usd8fml1j9t3fs1kpgdh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
