@@ -86,8 +86,6 @@ class MobileHome extends StatelessWidget {
     double height = MediaQuery.of(context).size.height;
     return MaterialApp(
       home: Scaffold(
-
-
         body: SafeArea(
           child: SingleChildScrollView(
             child: Column(
@@ -242,16 +240,17 @@ class MobileHome extends StatelessWidget {
                         textColor: kBlueColor,
                         boxColor: kWhiteColor,
                         iconColor: kBlueColor),
-                    FeaturedList(onTap: (){
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => ListDetails(
-                            type: "Seller",
-                          ),
-                        ),
-                      );
-                    },
+                    FeaturedList(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ListDetails(
+                                type: "Seller",
+                              ),
+                            ),
+                          );
+                        },
                         title: "Seller Details",
                         icon: Icons.sell_rounded,
                         textColor: kBlueColor,
@@ -263,7 +262,7 @@ class MobileHome extends StatelessWidget {
                             context,
                             MaterialPageRoute(
                               builder: (context) => ListDetails(
-                                type:  "User",
+                                type: "User",
                               ),
                             ),
                           );
@@ -273,57 +272,61 @@ class MobileHome extends StatelessWidget {
                         textColor: kBlueColor,
                         boxColor: kWhiteColor,
                         iconColor: kBlueColor),
-                    FeaturedList(onTap: (){
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => SellerPost(),
-                        ),
-                      );
-                    },
+                    FeaturedList(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => SellerPost(),
+                            ),
+                          );
+                        },
                         title: "Seller Post",
                         icon: Icons.post_add,
                         textColor: kBlueColor,
                         boxColor: kWhiteColor,
-                        iconColor: kBlueColor
-                    ),
-                    FeaturedList(onTap: (){
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => BuyerPost(),
-                        ),
-                      );
-                    },
+                        iconColor: kBlueColor),
+                    FeaturedList(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => BuyerPost(),
+                            ),
+                          );
+                        },
                         title: "Buyer Post",
                         icon: Icons.person,
                         textColor: kBlueColor,
                         boxColor: kWhiteColor,
                         iconColor: kBlueColor),
 
-                    FeaturedList(onTap: ()
-                        {
+                    FeaturedList(
+                        onTap: () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(builder: (context) {
                               return Events();
                             }),
                           );
-                        }, title: 'Event',
+                        },
+                        title: 'Event',
                         icon: Icons.event,
                         textColor: kBlueColor,
                         boxColor: kWhiteColor,
                         iconColor: kBlueColor),
 
-                    FeaturedList(onTap: (){ Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => VideoList(),
-                      ),
-                    );
-                    },
+                    FeaturedList(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => VideoList(),
+                            ),
+                          );
+                        },
                         title: "Video",
-                        icon:  Icons.video_call_sharp,
+                        icon: Icons.video_call_sharp,
                         textColor: kBlueColor,
                         boxColor: kWhiteColor,
                         iconColor: kBlueColor),
@@ -341,72 +344,77 @@ class MobileHome extends StatelessWidget {
                     //     boxColor: kBlueColor,
                     //     iconColor: kWhiteColor),
 
-                    FeaturedList(onTap: (){
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => Study(),
-                        ),
-                      );
-                    },
+                    FeaturedList(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => Study(),
+                            ),
+                          );
+                        },
                         title: "IELTS Test",
-                        icon:   Icons.text_snippet_rounded,
+                        icon: Icons.text_snippet_rounded,
                         textColor: kBlueColor,
                         boxColor: kWhiteColor,
                         iconColor: kBlueColor),
 
-                    FeaturedList(onTap: (){
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => Plans(),
-                        ),
-                      );
-                    },
+                    FeaturedList(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => Plans(),
+                            ),
+                          );
+                        },
                         title: 'Plans',
-                        icon:  Icons.book,
+                        icon: Icons.book,
                         textColor: kBlueColor,
                         boxColor: kWhiteColor,
                         iconColor: kBlueColor),
-                    FeaturedList(onTap: (){
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => Plans(),
-                        ),
-                      );
-                    },
+                    FeaturedList(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => Plans(),
+                            ),
+                          );
+                        },
                         title: "IELTS Classes",
-                        icon:  Icons.book,
+                        icon: Icons.book,
                         textColor: kBlueColor,
                         boxColor: kWhiteColor,
                         iconColor: kBlueColor),
-                    FeaturedList(onTap: (){
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => Plans(),
-                        ),
-                      );
-                    },
+                    FeaturedList(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => Plans(),
+                            ),
+                          );
+                        },
                         title: "My Match",
-                        icon:  Icons.add_location_alt,
+                        icon: Icons.add_location_alt,
                         textColor: kBlueColor,
                         boxColor: kWhiteColor,
                         iconColor: kBlueColor),
-                    FeaturedList(onTap: (){
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => Plans(),
-                        ),
-                      );
-                    },
-                        title: "Target Area",
-                        icon:  Icons.book,
-                        textColor: kBlueColor,
-                        boxColor: kWhiteColor,
-                        iconColor: kBlueColor,
+                    FeaturedList(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Plans(),
+                          ),
+                        );
+                      },
+                      title: "Target Area",
+                      icon: Icons.book,
+                      textColor: kBlueColor,
+                      boxColor: kWhiteColor,
+                      iconColor: kBlueColor,
                     ),
                   ],
                 ),
@@ -842,9 +850,7 @@ class DesktopHome extends StatelessWidget {
                     ),
                   ),
                   FeaturedList(
-                      onTap: () {
-
-                      },
+                      onTap: () {},
                       title: 'Videos',
                       icon: Icons.map,
                       textColor: kWhiteColor,
@@ -967,7 +973,7 @@ class FeaturedList extends StatelessWidget {
       @required this.icon,
       @required this.textColor,
       @required this.boxColor,
-        @required this.elevatedButton,
+      @required this.elevatedButton,
       @required this.iconColor})
       : super(key: key);
 
