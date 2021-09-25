@@ -2,7 +2,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-
 import 'package:ia_admin/screen/Contacts/chat_page.dart';
 
 import 'package:ia_admin/provider/auth_provider.dart';
@@ -31,9 +30,6 @@ class _HelloState extends State<Hello> {
       // Initialize FlutterFire:
       future: _initialization,
       builder: (context, snapshot) {
-        // Check for errors
-
-        // Once complete, show your application
         if (snapshot.connectionState == ConnectionState.done) {
           return MultiProvider(
             providers: [ChangeNotifierProvider(create: (_) => AuthProvider())],
@@ -43,8 +39,6 @@ class _HelloState extends State<Hello> {
             ),
           );
         }
-
-        // Otherwise, show something whilst waiting for initialization to complete
         return CircularProgressIndicator();
       },
     );
