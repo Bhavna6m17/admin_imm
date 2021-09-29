@@ -533,6 +533,7 @@ class _TabBarPageState extends State<TabBarPage> {
           ),
         ),
         body: TabBarView(
+
           children: <Widget>[
             Center(child: Text('Tab 1')),
             Center(child: Text('Tab 2')),
