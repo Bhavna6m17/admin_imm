@@ -85,7 +85,7 @@ class _OtpaScreenState extends State<OtpaScreen> {
                 child: TextField(
                   controller: OTPcontroller,
                   style: TextStyle(
-                    fontSize: 26,
+                    fontSize: 18,
                   ),
                   maxLength: 6,
 
@@ -94,22 +94,27 @@ class _OtpaScreenState extends State<OtpaScreen> {
 
                       hintText: "Enter your OTP",
                       border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(22.0),
+                          borderRadius: BorderRadius.circular(18.0),
                       ),             ),
                 ),
               ),
           Container(
-              color: Color(0xff0d47a1),
+              // color: Color(0xff0d47a1),
             height: 50, width: 130,
             child: ElevatedButton(
               style: ButtonStyle(
-                  backgroundColor: MaterialStateColor.resolveWith((states) => Color(0xff0d47a1))
+                  backgroundColor: MaterialStateColor.resolveWith((states) => Color(0xff0d47a1)),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+              RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(100.0),
+            ),
+          ),
               ),
               onPressed: (){
              verifyOTP(context);
             }, child: Text("Login",
               style: TextStyle(color: Colors.white,
-                  fontSize: 23
+                  fontSize: 18
               ),
             ),
 

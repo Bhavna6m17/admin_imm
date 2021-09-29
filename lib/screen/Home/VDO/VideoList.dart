@@ -76,7 +76,7 @@ class _VideoListState extends State<VideoList> {
   List<String> urls = [
     "https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4",
     "https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4",
-    "https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4"
+    "https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4",
   ];
 
   List<VideoPlayerController> _controllers = [];
@@ -127,7 +127,7 @@ class _VideoListState extends State<VideoList> {
                 child: Column(
                   children: [
                     Container(
-                      child: controller.value.initialized
+                      child: controller.value.isInitialized
                           ? AspectRatio(
                         aspectRatio: controller.value.aspectRatio,
                         child: VideoPlayer(controller),
@@ -150,7 +150,7 @@ class _VideoListState extends State<VideoList> {
                               color: kWhiteColor,
                             ),
                             ),
-                            Text("Video Title",
+                            Text(" Title",
                               style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w500,
@@ -161,12 +161,9 @@ class _VideoListState extends State<VideoList> {
                         ),
                       ),
                     ),
-
                   ],
                 ),
               ),
-
-
             ),
           );
         },

@@ -1,10 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class AuthProvider extends ChangeNotifier {
   final _firebaseAuth = FirebaseAuth.instance;
-  FirebaseFirestore db = FirebaseFirestore.instance;
+
   UserCredential user;
   var userInDb;
   User currentUser;

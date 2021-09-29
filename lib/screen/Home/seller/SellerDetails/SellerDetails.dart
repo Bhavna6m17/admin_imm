@@ -13,6 +13,7 @@ class UserDetails extends StatefulWidget {
   final String uid;
   final List officeGallery;
 
+
   const UserDetails({
     Key key,
     this.type,
@@ -22,14 +23,22 @@ class UserDetails extends StatefulWidget {
     this.email,
     this.data,
     this.description,
-    this.uid, this.officeGallery,
+    this.uid,
+    this.officeGallery,
   }) : super(key: key);
   @override
   _UserDetailsState createState() => _UserDetailsState();
 }
 
 class _UserDetailsState extends State<UserDetails> {
+
   List dataSnap = [];
+  @override
+  void initState() {
+
+   print("gal----------------${widget.officeGallery}");
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,7 +56,7 @@ class _UserDetailsState extends State<UserDetails> {
         child: ListView(
           shrinkWrap: true,
           children: [
-             Text(widget.officeGallery.toString()),
+             // Text(widget.officeGallery.toString()??""),
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: GestureDetector(
@@ -89,111 +98,108 @@ class _UserDetailsState extends State<UserDetails> {
             // SizedBox(
             //   height: 30,
             // ),
-            TextFormField(
-              initialValue:  widget.name ?? "",
-              decoration: InputDecoration(labelText: "Name"),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextFormField(
+                enabled: false,
+                initialValue:  widget.name ?? "null",
+                decoration: InputDecoration(labelText: "Name"),
 
+              ),
             ),
-      TextFormField(
-        initialValue:  widget.phone ?? "",
-        decoration: InputDecoration(labelText: "Phone"),),
-      TextFormField(
-        initialValue:  widget.email ?? "",
-        decoration: InputDecoration(labelText: "Email"),),
+      Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: TextFormField(
+          enabled: false,
+          initialValue:  widget.phone ?? "null",
+          decoration: InputDecoration(labelText: "Phone"),),
+      ),
+      Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: TextFormField(
+          enabled: false,
+          initialValue:  widget.email ?? "null",
+          decoration: InputDecoration(labelText: "Email"),),
+      ),
             widget.type == "User"
                 ? Container()
-                : Text(
-                  widget.description ?? "No data",
-                  style: TextStyle(
-                    fontSize: 18,
-                    color: Colors.black,
+                : Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    widget.description ?? "No data",
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.black,
+                    ),
                   ),
                 ),
-            widget.type == "Seller"
-                ? FutureBuilder(
-                    future: FirebaseDatabase.instance
-                        .reference()
-                        .child("Users")
-                        .orderByChild("uid")
-                        .equalTo(widget.uid)
-                        .once(),
-                    builder: (context, AsyncSnapshot<DataSnapshot> snapshot) {
+            widget.type == "Seller"?
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Center(child: Text('Gallery',
+              style: TextStyle(
+                color: Colors.blue.shade900,
+                fontSize: 20,
+                  fontWeight: FontWeight.bold,
+              ),)),
+            ):Container(),
+            (widget.type == "Seller")?
+            FutureBuilder(
+                future: FirebaseDatabase.instance.reference().child("Users").orderByChild("uid").equalTo(widget.uid).once(),
+                builder:(context,AsyncSnapshot<DataSnapshot> snapshot){
+              if(snapshot.hasError){
+                return Center(child: Text(snapshot.error.toString()));
+              }
+              if(snapshot.connectionState == ConnectionState.done){
+                Map<dynamic, dynamic> values =snapshot.data.value;
+                values.forEach((key, dat) {
 
-                      if (snapshot.connectionState == ConnectionState.active) {
-                        Map<dynamic, dynamic> values = snapshot.data.value;
-                        values.forEach((key, dat) {
-                          dataSnap.add(dat);
-                        });
-                        return Column(
-                          children: [
-                            GridView.builder(
-                                gridDelegate:
-                                    SliverGridDelegateWithMaxCrossAxisExtent(
-                                        maxCrossAxisExtent: 3 / 2),
-                                itemBuilder: (context, index) {
-                                  return Container(
-                                    child: Image.network(
-                                        dataSnap[index]['officeGallery'][index]),
-                                  );
-                                }),
-                          ],
-                        );
-                      }
-                      return Center(child: CircularProgressIndicator());
-                    })
-                : Container()
-            // Container(
-            //   child: ElevatedButton(
-            //     style: ButtonStyle(
-            //         backgroundColor: MaterialStateColor.resolveWith(
-            //                 (states) => Color(0xff0d47a1))),
-            //     onPressed: () {
-            //     },
-            //     child: Text(
-            //       "View Details",
-            //       style: TextStyle(color: Colors.white, fontSize: 23),
-            //     ),
-            //   ),
-            // ),
+                  dataSnap.add(dat);
+
+                });
+                return (dataSnap[0]["officeGallery"].length != null)? GridView.builder(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemCount:dataSnap[0]["officeGallery"].length,
+                  gridDelegate:
+                  SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2, ),
+                  itemBuilder: (context, index) {
+                    return Container(
+                      height: 100,
+                      child: Image.network(
+                        dataSnap[0]["officeGallery"][index],
+                        fit: BoxFit.cover,),
+                    );
+                  },):Container();
+              }
+              return Center(child: CircularProgressIndicator());
+            } ):Container(),
+            // if(widget.type == "Seller" && widget.officeGallery.length !=null)
+            //
+            // else
+            //   Container(),
+            // ( widget.type == "Seller"  )
+            // ?GridView.builder(
+            //   shrinkWrap: true,
+            //     physics: NeverScrollableScrollPhysics(),
+            //     itemCount: widget.officeGallery.length==null?0:widget.officeGallery.length,
+            //     gridDelegate:
+            //     SliverGridDelegateWithFixedCrossAxisCount(
+            //         crossAxisCount: 2, ),
+            //     itemBuilder: (context, index) {
+            //       return Container(
+            //         height: 100,
+            //         child: Image.network(
+            //             widget.officeGallery[index],
+            //           fit: BoxFit.cover,),
+            //       );
+            //     },)
+            //     : Container(),
+
           ],
         ),
       ),
-      // bottomNavigationBar: BottomNavigationBar(
-      //   items: <BottomNavigationBarItem>[
-      //     BottomNavigationBarItem(
-      //       icon: Icon(
-      //         Icons.call,
-      //         size: 40,
-      //         color: Colors.black,
-      //       ),
-      //       label: 'Calls',
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: Icon(
-      //         Icons.photo,
-      //         size: 40,
-      //         color: Colors.black,
-      //       ),
-      //       label: 'Posts',
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: Icon(
-      //         Icons.chat,
-      //         size: 40,
-      //         color: Colors.black,
-      //       ),
-      //       label: 'Chats',
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: Icon(
-      //         Icons.check_box_outlined,
-      //         size: 40,
-      //         color: Colors.black,
-      //       ),
-      //       label: 'Status',
-      //     ),
-      //   ],
-      // ),
     );
   }
 }

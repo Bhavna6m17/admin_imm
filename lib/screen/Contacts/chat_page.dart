@@ -17,7 +17,7 @@ class chatbot extends StatefulWidget {
 
 class _chatbotState extends State<chatbot> {
   final messageInsert = TextEditingController();
-  List<Map> messsages = List();
+  List<Map> messsages = [];
 
   @override
   Widget build(BuildContext context) {

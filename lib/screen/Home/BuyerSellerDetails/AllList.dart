@@ -153,6 +153,7 @@ class _UserDetailsState extends State<ListDetails> {
                                     Text(dataSnap[index]["address"]??" ",
                                       style: TextStyle(fontSize: 14,
                                           color: Colors.black,
+
                                       fontWeight: FontWeight.bold
                                       ),
                                     ),

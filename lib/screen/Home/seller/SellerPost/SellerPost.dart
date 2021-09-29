@@ -68,6 +68,12 @@ class _SellerPostState extends State<SellerPost> {
                       context,
                       MaterialPageRoute(
                         builder: (context) => PostStatus(
+
+                          time: dataSnap[index]["time"],
+                          date: dataSnap[index]["date"],
+                          specialization:dataSnap[index]["specialization"],
+                          certficates:dataSnap[index]["Certificates"],
+                          plan: dataSnap[index]["plan"].toString(),
                           postImage: dataSnap[index]["image"].toString(),
                           discription:
                               dataSnap[index]["discription"].toString(),
@@ -83,6 +89,7 @@ class _SellerPostState extends State<SellerPost> {
                           sellerPhone:
                               dataSnap[index]["sellerPhone"].toString(),
                           sellerName: dataSnap[index]["sellerName"].toString(),
+                            qualification: dataSnap[index]["qualification"].toString(),
                         ),
                       ),
                     );
@@ -111,7 +118,7 @@ class _SellerPostState extends State<SellerPost> {
                                 style: TextStyle(
                                   textBaseline: TextBaseline.alphabetic,
                                   color: Colors.blue.shade900,
-                                  fontSize: 12,
+                                  fontSize: 14,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),

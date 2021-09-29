@@ -1,14 +1,8 @@
-import 'dart:convert';
-
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:ia_admin/Models/PostModel.dart';
-import 'package:ia_admin/Models/PostModel.dart';
-import 'package:ia_admin/Models/PostModel.dart';
-import 'package:ia_admin/Models/PostModel.dart';
+
 import 'package:ia_admin/screen/Home/Buyer/BuyerPost/BuyerPostStatus.dart';
-import 'package:ia_admin/screen/Home/seller/SellerPost/SellerPostStatus.dart';
-import 'package:http/http.dart';
+
 
 class BuyerPost extends StatefulWidget {
   const BuyerPost({Key key}) : super(key: key);
@@ -33,10 +27,6 @@ class _BuyerPostState extends State<BuyerPost> {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-    void initState() {
-      fetchData();
-      super.initState();
-    }
 
     return Scaffold(
       appBar: AppBar(
@@ -46,9 +36,9 @@ class _BuyerPostState extends State<BuyerPost> {
       body: FutureBuilder<DataSnapshot>(
         future: db.child("BuyerPosts").once(),
         builder: (context, AsyncSnapshot<DataSnapshot> snapshot) {
-          // if (!snapshot.hasData) {
-          //   return Center(child: Text("No data here!"));
-          // }
+          if (!snapshot.hasData) {
+            return Center(child: Text("No data here!"));
+          }
           if (snapshot.hasError) {
             return Center(child: Text(snapshot.error.toString()));
           }
@@ -79,16 +69,15 @@ class _BuyerPostState extends State<BuyerPost> {
                           pid: dataSnap[index]["pid"].toString(),
                           image: dataSnap[index]["image"].toString(),
                           description:
-                              dataSnap[index]["discription"].toString(),
+                              dataSnap[index]["description"].toString(),
                           // pid: dataSnap[index]["pid"].toString(),
                           // description: dataSnap[index]["publisher"].toString(),
-                          buyerEmail: dataSnap[index]["BuyerEmail"].toString(),
-                          imageprofileimage:
-                              dataSnap[index]["slogo"].toString(),
-                          address: dataSnap[index]["BuyerAddress"].toString(),
-                          designation:
-                              dataSnap[index]["productState"].toString(),
-                          buyerPhone: dataSnap[index]["BuyerPhone"].toString(),
+                          buyerEmail: dataSnap[index]["buyerEmail"].toString(),
+                          profileimage:
+                              dataSnap[index]["profileimage"].toString(),
+                          address: dataSnap[index]["address"].toString(),
+                          designation: dataSnap[index]["productState"].toString(),
+                          mobile: dataSnap[index]["mobile"].toString(),
                           name: dataSnap[index]["name"].toString(),
                         ),
                       ),

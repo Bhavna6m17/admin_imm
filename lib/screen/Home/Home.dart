@@ -2,15 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ia_admin/screen/Home/Buyer/BuyerPost/BuyerPost.dart';
 import 'package:ia_admin/screen/Home/IletStudy.dart';
-import 'package:ia_admin/screen/Home/MyMatch.dart';
 import 'package:ia_admin/screen/Home/VDO/VideoList.dart';
+import 'package:ia_admin/screen/Home/seller/SellerDetails/SellerForm.dart';
 import 'package:ia_admin/screen/Home/seller/SellerPost/SellerPost.dart';
 import 'package:ia_admin/Models/UserModel.dart';
 import 'package:ia_admin/constant/constants.dart';
 import 'package:ia_admin/screen/Home/Events.dart';
 import 'package:ia_admin/screen/Home/HotArea.dart';
-// import 'package:ia_admin/details/IletStudy.dart';
-// import 'package:ia_admin/details/MyMatch.dart';
 import 'package:ia_admin/screen/Home/Plan.dart';
 import 'package:ia_admin/screen/Home/BuyerSellerDetails/AllList.dart';
 import 'package:ia_admin/screen/LoginScreen.dart';
@@ -28,46 +26,46 @@ class _HomeState extends State<Home> {
   DatabaseReference db = FirebaseDatabase.instance.reference();
   var dataa;
   Map<dynamic, dynamic> docData;
-  putdata() {
-    db
-        .child("path")
-        .push()
-        .set({"name": "Immigtaion Adda"})
-        .whenComplete(() => print("-------------add added "))
-        .catchError((onError) {
-          print("==================$onError");
-        })
-        .onError((error, stackTrace) => print("````````````````$error"));
-  }
-
-  readData() {
-    db.child("Users").once().then(
-        (value) => print("``````````============``````````${value.value}"));
-  }
-
-  Future<void> getData() async {
-    await db
-        .child("Users")
-        .orderByChild("uid")
-        .equalTo("6lOVecgdWYU7oyjxvpT5s5ErIpg1")
-        .once()
-        .then((DataSnapshot snapshot) {
-      Map<dynamic, dynamic> values = snapshot.value;
-      values.forEach((key, values) {
-        dataa = values;
-        print("------------------${dataa["name"]}");
-      });
-    });
-  }
-
-  @override
-  void initState() {
-    getData();
-    // TODO: implement initState
-    super.initState();
-
-//    print("============$dataa");
-  }
+//   putdata() {
+//     db
+//         .child("path")
+//         .push()
+//         .set({"name": "Immigtaion Adda"})
+//         .whenComplete(() => print("-------------add added "))
+//         .catchError((onError) {
+//           print("==================$onError");
+//         })
+//         .onError((error, stackTrace) => print("````````````````$error"));
+//   }
+//
+//   readData() {
+//     db.child("Users").once().then(
+//         (value) => print("``````````============``````````${value.value}"));
+//   }
+//
+//   Future<void> getData() async {
+//     await db
+//         .child("Users")
+//         .orderByChild("uid")
+//         .equalTo("6lOVecgdWYU7oyjxvpT5s5ErIpg1")
+//         .once()
+//         .then((DataSnapshot snapshot) {
+//       Map<dynamic, dynamic> values = snapshot.value;
+//       values.forEach((key, values) {
+//         dataa = values;
+//         print("------------------${dataa["name"]}");
+//       });
+//     });
+//   }
+//
+//   @override
+//   void initState() {
+//     getData();
+//     // TODO: implement initState
+//     super.initState();
+//
+// //    print("============$dataa");
+//   }
 
   @override
   Widget build(BuildContext context) {
@@ -84,10 +82,7 @@ class MobileHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
-    return MaterialApp(
-      home: Scaffold(
-
-
+    return Scaffold(
         body: SafeArea(
           child: SingleChildScrollView(
             child: Column(
@@ -97,47 +92,44 @@ class MobileHome extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: Color(0xff0d47a1),
                   ),
-                  child: Expanded(
-                    flex: 1,
-                    child: Row(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(12.0),
-                          child: CircleAvatar(
-                            radius: 45,
-                            backgroundImage: AssetImage(
-                              "images/logo.jpeg",
-                            ),
+                  child: Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: CircleAvatar(
+                          radius: 45,
+                          backgroundImage: AssetImage(
+                            "images/logo.jpeg",
                           ),
                         ),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Center(
-                              child: Text(
-                                "Immigration Adda",
-                                style: TextStyle(
-                                    fontSize: 23,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white),
-                              ),
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Center(
+                            child: Text(
+                              "Immigration Adda",
+                              style: TextStyle(
+                                  fontSize: 23,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white),
                             ),
-                          ],
-                        ),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        IconButton(
-                          onPressed: () {},
-                          icon: Icon(
-                            Icons.edit,
-                            size: 25,
-                            color: Colors.white,
-                            // color: Colors.white,
                           ),
+                        ],
+                      ),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      IconButton(
+                        onPressed: () {},
+                        icon: Icon(
+                          Icons.edit,
+                          size: 25,
+                          color: Colors.white,
+                          // color: Colors.white,
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
                 SizedBox(
@@ -169,24 +161,18 @@ class MobileHome extends StatelessWidget {
                   crossAxisCount: 2,
                   padding: EdgeInsets.all(10),
                   children: [
+
                     FeaturedList(
                         onTap: () {},
-                        title: 'New Registration',
+                        title: 'Seller Panel',
                         icon: Icons.sell_sharp,
                         textColor: kBlueColor,
                         boxColor: kWhiteColor,
                         iconColor: kBlueColor),
                     FeaturedList(
                         onTap: () {},
-                        title: 'Seller Panel',
-                        icon: Icons.note_add_sharp,
-                        textColor: kBlueColor,
-                        boxColor: kWhiteColor,
-                        iconColor: kBlueColor),
-                    FeaturedList(
-                        onTap: () {},
                         title: 'Buyer Panel',
-                        icon: Icons.note_add_sharp,
+                        icon: Icons.person,
                         textColor: kBlueColor,
                         boxColor: kWhiteColor,
                         iconColor: kBlueColor),
@@ -244,7 +230,7 @@ class MobileHome extends StatelessWidget {
                       );
                     },
                         title: "Buyer Post",
-                        icon: Icons.person,
+                        icon: Icons.post_add_sharp,
                         textColor: kBlueColor,
                         boxColor: kWhiteColor,
                         iconColor: kBlueColor),
@@ -259,6 +245,36 @@ class MobileHome extends StatelessWidget {
                           );
                         }, title: 'Event',
                         icon: Icons.event,
+                        textColor: kBlueColor,
+                        boxColor: kWhiteColor,
+                        iconColor: kBlueColor),
+                    FeaturedList(onTap: (){
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => SellerForm(),
+                        ),
+                      );
+                    },
+                      title: "Target Area",
+                      icon:  Icons.book,
+                      textColor: kBlueColor,
+                      boxColor: kWhiteColor,
+                      iconColor: kBlueColor,
+                    ),
+
+                    FeaturedList(onTap: (){
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ListDetails(
+                            type: "Seller",
+                          ),
+                        ),
+                      );
+                    },
+                        title: "Chat Box",
+                        icon: Icons.voice_chat,
                         textColor: kBlueColor,
                         boxColor: kWhiteColor,
                         iconColor: kBlueColor),
@@ -356,6 +372,13 @@ class MobileHome extends StatelessWidget {
                         boxColor: kWhiteColor,
                         iconColor: kBlueColor,
                     ),
+                    FeaturedList(
+                        onTap: () {},
+                        title: 'Luggage',
+                        icon: Icons.luggage_sharp,
+                        textColor: kBlueColor,
+                        boxColor: kWhiteColor,
+                        iconColor: kBlueColor),
                   ],
                 ),
                 // Spacer(
@@ -370,12 +393,46 @@ class MobileHome extends StatelessWidget {
                         BoxDecoration(borderRadius: BorderRadius.circular(10)),
                   ),
                 ),
+                Padding(
+                  padding: EdgeInsets.all(8),
+                  child: Container(
+                    height: 50, width: 130,
+                    //color: Color(0xff0d47a1),
+                    decoration:
+                    BoxDecoration(borderRadius: BorderRadius.circular(20)),
+                    child: ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateColor.resolveWith(
+                              (states) => Color(0xff0d47a1),
+                        ),
+                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(40.0),
+                          ),
+                        ),
+                      ),
+                      onPressed: () {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(builder: (context) => Login()),
+                        );
+                      },
+                      child: Text(
+                        "Log Out",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18),
+                      ),
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
         ),
-      ),
-    );
+      );
+
   }
 }
 

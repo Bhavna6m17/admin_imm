@@ -130,40 +130,58 @@ class _LoginState extends State<Login> {
                   ),
                 ),
                 SizedBox(
-                  height: 80,
+                  height: 40,
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: TextField(
+                  padding: const EdgeInsets.all(24.0),
+                  child: TextFormField(
+                    // validator: (value){
+                    //   if(value== null){
+                    //     return "Enter Mobile no";
+                    //   }
+                    // }
+                    // ,
+
                     controller:
                         Provider.of<AuthProvider>(context, listen: false)
                             .phoneController,
                     style: TextStyle(
-                      fontSize: 26,
+                      fontSize: 18,
                     ),
                     maxLength: 10,
                     keyboardType: TextInputType.phone,
                     decoration: InputDecoration(
+
                         hintText: "Enter your mobile number",
                         prefix: Text("+91 | "),
                         border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(22.0))),
+                            borderRadius: BorderRadius.circular(18.0))),
                   ),
                 ),
                 Container(
-                  color: Color(0xff0d47a1),
+
                   height: 50,
                   width: 130,
                   child: ElevatedButton(
                     style: ButtonStyle(
-                        backgroundColor: MaterialStateColor.resolveWith(
-                            (states) => Color(0xff0d47a1))),
+                      backgroundColor: MaterialStateColor.resolveWith(
+                              (states) => Color(0xff0d47a1)),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(100.0),
+                        ),
+                      ),
+                    ),
                     onPressed: () {
+                      if(Provider.of<AuthProvider>(context, listen: false)
+                          .phoneController.text.length <10){
+                        return _showErrorDialog(context, "Please enter mobile number", "Error Occured!", "Ok");
+                      }
                       verifyPhone(context);
                     },
                     child: Text(
                       "Next",
-                      style: TextStyle(color: Colors.white, fontSize: 23),
+                      style: TextStyle(color: Colors.white, fontSize: 18),
                     ),
                   ),
                 ),
