@@ -168,7 +168,7 @@ class MobileHome extends StatelessWidget {
                         icon: Icons.sell_sharp,
                         textColor: kBlueColor,
                         boxColor: kWhiteColor,
-                        iconColor: kBlueColor),
+                        iconColor: kBlueColor,),
                     FeaturedList(
                         onTap: () {},
                         title: 'Buyer Panel',
@@ -964,7 +964,7 @@ class FeaturedList extends StatelessWidget {
   final Function onTap;
   final String title;
   final IconData icon;
-  final ElevatedButton elevatedButton;
+
   const FeaturedList(
       {Key key,
       @required this.onTap,
@@ -972,7 +972,7 @@ class FeaturedList extends StatelessWidget {
       @required this.icon,
       @required this.textColor,
       @required this.boxColor,
-        @required this.elevatedButton,
+
       @required this.iconColor})
       : super(key: key);
 

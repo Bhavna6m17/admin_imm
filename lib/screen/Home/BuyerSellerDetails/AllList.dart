@@ -178,7 +178,7 @@ class _UserDetailsState extends State<ListDetails> {
                                           Navigator.push(
                                               context,
                                               MaterialPageRoute(
-                                              builder: (context) => chatbot(
+                                              builder: (context) => ChatView(
                                                 image: dataSnap[index]['profileimage'].toString(),
                                                 name: dataSnap[index]['name'].toString(),
                                               ),),

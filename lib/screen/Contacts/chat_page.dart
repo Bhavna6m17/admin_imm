@@ -3,32 +3,32 @@ import 'package:flutter/material.dart';
 
 
 
-class chatbot extends StatefulWidget {
+class ChatView extends StatefulWidget {
    String image;
    String name;
    String phone;
-   chatbot({this.image, this.name,this.phone});
+   ChatView({this.image, this.name,this.phone});
   // final int coins;
 
 
   @override
-  _chatbotState createState() => _chatbotState();
+  _ChatViewState createState() => _ChatViewState();
 }
 
-class _chatbotState extends State<chatbot> {
+class _ChatViewState extends State<ChatView> {
   final messageInsert = TextEditingController();
   List<Map> messsages = [];
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery
-        .of(context)
-        .size
-        .width;
-    double height = MediaQuery
-        .of(context)
-        .size
-        .height;
+    // double width = MediaQuery
+    //     .of(context)
+    //     .size
+    //     .width;
+    // double height = MediaQuery
+    //     .of(context)
+    //     .size
+    //     .height;
     return Scaffold(
       appBar: AppBar(
         elevation: 0.0,
@@ -151,6 +151,7 @@ class _chatbotState extends State<chatbot> {
             Expanded(
               child: TextField(
                 keyboardType: TextInputType.multiline,
+
                 maxLengthEnforced: true,
                 maxLength: 40,
                 controller: messageInsert,

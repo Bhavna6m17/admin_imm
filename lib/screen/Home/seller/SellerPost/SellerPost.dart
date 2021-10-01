@@ -1,5 +1,6 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:ia_admin/constant/constants.dart';
 
 import 'SellerPostStatus.dart';
 
@@ -38,8 +39,13 @@ class _SellerPostState extends State<SellerPost> {
       body: FutureBuilder<DataSnapshot>(
         future: db.child("Posts").once(),
         builder: (context, AsyncSnapshot<DataSnapshot> snapshot) {
-          if (!snapshot.hasData) {
-            return Center(child: Text("No data here!"));
+          // if (!snapshot.hasData) {
+          //   return Center(child: Text("No data here!"));
+          // }
+          if(snapshot.connectionState == ConnectionState.waiting){
+            return Center(
+              child: CircularProgressIndicator(color:kBlueColor),
+            );
           }
           if (snapshot.hasError) {
             return Center(child: Text(snapshot.error.toString()));
@@ -56,7 +62,7 @@ class _SellerPostState extends State<SellerPost> {
               gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                 maxCrossAxisExtent: 300,
                 childAspectRatio: 3 / 3,
-                crossAxisSpacing: 20,
+                crossAxisSpacing: 10,
                 mainAxisSpacing: 10,
               ),
               itemBuilder: (context, index) {
@@ -68,7 +74,7 @@ class _SellerPostState extends State<SellerPost> {
                       context,
                       MaterialPageRoute(
                         builder: (context) => PostStatus(
-
+                          sid: dataSnap[index]["sid"],
                           time: dataSnap[index]["time"],
                           date: dataSnap[index]["date"],
                           specialization:dataSnap[index]["specialization"],
