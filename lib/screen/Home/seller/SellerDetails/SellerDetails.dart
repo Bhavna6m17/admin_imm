@@ -1,6 +1,7 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:ia_admin/constant/constants.dart';
 
 import '../../../ViewImage.dart';
 
@@ -35,6 +36,10 @@ class UserDetails extends StatefulWidget {
 class _UserDetailsState extends State<UserDetails> {
 
   List dataSnap = [];
+
+  List dataList = [];
+
+  List dataPost=[];
   @override
   void initState() {
 
@@ -43,6 +48,8 @@ class _UserDetailsState extends State<UserDetails> {
   }
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue.shade900,
@@ -53,153 +60,372 @@ class _UserDetailsState extends State<UserDetails> {
           ),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 5),
-        child: ListView(
-          shrinkWrap: true,
-          children: [
-             // Text(widget.officeGallery.toString()??""),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: GestureDetector(
-                  onTap: () {
-                    widget.profileimg != ""
-                        ? Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => ViewImage(
-                                      image: widget.profileimg,
-                                    )),
-                          )
-                        : showDialog(
-                            context: context,
-                            builder: (context) => AlertDialog(
-                                  title: Text("No image here!"),
-                                  actions: [
-                                    ElevatedButton(
-                                        onPressed: () {
-                                          Navigator.pop(context);
-                                        },
-                                        child: Text("Cancel"),),
-                                  ],
-                                ));
-                  },
-                  child: ClipRRect(
-                     borderRadius: BorderRadius.circular(5),
-                    child: widget.profileimg == ""
-                        ? Image.asset('images/icons8-person-80.png')
-                        : Image.network(widget.profileimg),
-                  ),
-                  // CircleAvatar(
-                  //     radius: 120,
-                  //     backgroundImage: widget.profileimg == ""
-                  //         ? AssetImage('images/business man icon.png')
-                  //         : NetworkImage(widget.profileimg)),
-                  ),
-            ),
-            // SizedBox(
-            //   height: 30,
-            // ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextFormField(
-                enabled: false,
-                initialValue:  widget.name ?? "null",
-                decoration: InputDecoration(labelText: "Name"),
-
+      body: DefaultTabController(
+        length: 4,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 5),
+          child: ListView(
+            shrinkWrap: true,
+            children: [
+               // Text(widget.officeGallery.toString()??""),
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: GestureDetector(
+                    onTap: () {
+                      widget.profileimg != ""
+                          ? Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ViewImage(
+                                        image: widget.profileimg,
+                                      )),
+                            )
+                          : showDialog(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                    title: Text("No image here!"),
+                                    actions: [
+                                      ElevatedButton(
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          },
+                                          child: Text("Cancel"),),
+                                    ],
+                                  ));
+                    },
+                    child: ClipRRect(
+                       borderRadius: BorderRadius.circular(5),
+                      child: widget.profileimg == ""
+                          ? Image.asset('images/icons8-person-80.png')
+                          : Image.network(widget.profileimg),
+                    ),
+                    // CircleAvatar(
+                    //     radius: 120,
+                    //     backgroundImage: widget.profileimg == ""
+                    //         ? AssetImage('images/business man icon.png')
+                    //         : NetworkImage(widget.profileimg)),
+                    ),
               ),
-            ),
-      Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: TextFormField(
-          enabled: false,
-          initialValue:  widget.phone ?? "null",
-          decoration: InputDecoration(labelText: "Phone"),),
-      ),
-      Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: TextFormField(
-          enabled: false,
-          initialValue:  widget.email ?? "null",
-          decoration: InputDecoration(labelText: "Email"),),
-      ),
-            widget.type == "User"
-                ? Container()
-                : Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    widget.description ?? "No data",
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: Colors.black,
+              // SizedBox(
+              //   height: 30,
+              // ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextFormField(
+                  enabled: false,
+                  initialValue:  widget.name ?? "null",
+                  decoration: InputDecoration(labelText: "Name"),
+
+                ),
+              ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: TextFormField(
+            enabled: false,
+            initialValue:  widget.phone ?? "null",
+            decoration: InputDecoration(labelText: "Phone"),),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: TextFormField(
+            enabled: false,
+            initialValue:  widget.email ?? "null",
+            decoration: InputDecoration(labelText: "Email"),),
+        ),
+              widget.type == "User"
+                  ? Container()
+                  : Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      widget.description ?? "No data",
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: Colors.black,
+                      ),
                     ),
                   ),
-                ),
-            widget.type == "Seller"?
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Center(child: Text('Gallery',
-              style: TextStyle(
-                color: Colors.blue.shade900,
-                fontSize: 20,
-                  fontWeight: FontWeight.bold,
-              ),)),
-            ):Container(),
-            (widget.type == "Seller")?
-            FutureBuilder(
-                future: FirebaseDatabase.instance.reference().child("Users").orderByChild("uid").equalTo(widget.uid).once(),
-                builder:(context,AsyncSnapshot<DataSnapshot> snapshot){
-              if(snapshot.hasError){
-                return Center(child: Text(snapshot.error.toString()));
-              }
-              if(snapshot.connectionState == ConnectionState.done){
-                Map<dynamic, dynamic> values =snapshot.data.value;
-                values.forEach((key, dat) {
+              widget.type == "Seller"?
+             Column(
+               children: [
+                 SizedBox(
+                   height: height * 0.12,
+                   child: AppBar(
+                       backgroundColor: kBlueColor,
+                       automaticallyImplyLeading: false,
+                       bottom: TabBar(
+                         tabs: [
+                           Tab(
+                             icon: Icon(Icons.photo),
+                             text: "Gallery",
+                           ),
+                           Tab(
+                               icon: Icon(
+                                   Icons.document_scanner_sharp),
+                               text: "Certificate"),
+                           Tab(
+                               icon: Icon(
+                                   Icons.phonelink_setup_rounded),
+                               text: "Posts"),
+                           Tab(
+                               icon: Icon(Icons.comment),
+                               text: "Reviews"),
+                         ],
+                       )),
+                 ),
+                 Container(
+                   height:height,
+                   child: TabBarView(
+                     children: [
+                       FutureBuilder(
 
-                  dataSnap.add(dat);
+                           future: FirebaseDatabase.instance
+                               .reference()
+                               .child("Users")
+                               .orderByChild("uid")
+                               .equalTo(widget.uid)
+                               .once(),
+                           builder: (context,
+                               AsyncSnapshot<DataSnapshot>
+                               snapshot) {
+                             if (snapshot.hasError) {
+                               return Text(
+                                   snapshot.error.toString());
+                             }
+                             if (snapshot.connectionState ==
+                                 ConnectionState.waiting) {
+                               return CircularProgressIndicator();
+                             }
+                             if (snapshot.hasError) {
+                               return Text(
+                                   snapshot.error.toString());
+                             }
+                             if (snapshot.connectionState ==
+                                 ConnectionState.done) {
+                               Map<dynamic, dynamic> values =
+                                   snapshot.data.value;
+                               values.forEach((key, dat) {
+                                 dataSnap.add(dat);
+                               });
+                               return (dataSnap[0]["officeGallery"]
+                                   .length !=
+                                   null)
+                                   ? GridView.builder(
+                                 shrinkWrap: true,
+                                 physics:
+                                 NeverScrollableScrollPhysics(),
+                                 itemCount: dataSnap[0]
+                                 ["officeGallery"]
+                                     .length,
+                                 gridDelegate:
+                                 SliverGridDelegateWithFixedCrossAxisCount(
+                                   crossAxisCount: 2,
+                                 ),
+                                 itemBuilder:
+                                     (context, index) {
+                                   return GestureDetector(
+                                     onTap: () {
+                                       Navigator.of(context).push(
+                                           MaterialPageRoute(
+                                               builder: (_) =>
+                                                   ViewImage(
+                                                       image:
+                                                       dataSnap[0]["officeGallery"][index])));
+                                     },
+                                     child: Container(
+                                       height: 100,
+                                       child: Image.network(
+                                         dataSnap[0][
+                                         "officeGallery"]
+                                         [index],
+                                         fit: BoxFit.cover,
+                                       ),
+                                     ),
+                                   );
+                                 },
+                               )
+                                   : Container();
+                             }
+                             return Center(
+                                 child:
+                                 CircularProgressIndicator());
+                           }),
+                       FutureBuilder(
+                           future: FirebaseDatabase.instance
+                               .reference()
+                               .child("Users")
+                               .orderByChild("uid")
+                               .equalTo(widget.uid)
+                               .once(),
+                           builder: (context,
+                               AsyncSnapshot<DataSnapshot>
+                               snapshot) {
+                             if (snapshot.connectionState ==
+                                 ConnectionState.waiting) {
+                               return CircularProgressIndicator();
+                             }
+                             if (!snapshot.hasData) {
+                               return Text("No data here!");
+                             }
+                             if (snapshot.hasError) {
+                               return Text(
+                                   snapshot.error.toString());
+                             }
+                             if (snapshot.connectionState ==
+                                 ConnectionState.done) {
+                               Map<dynamic, dynamic> values =
+                                   snapshot.data.value;
+                               values.forEach((key, dat) {
+                                 dataSnap.add(dat);
+                               });
+                               return (dataSnap[0]["Certificates"]
+                                   .length !=
+                                   null)
+                                   ? GridView.builder(
+                                 shrinkWrap: true,
+                                 physics:
+                                 NeverScrollableScrollPhysics(),
+                                 itemCount: dataSnap[0]
+                                 ["Certificates"]
+                                     .length,
+                                 gridDelegate:
+                                 SliverGridDelegateWithFixedCrossAxisCount(
+                                   crossAxisCount: 2,
+                                 ),
+                                 itemBuilder:
+                                     (context, index) {
+                                   return GestureDetector(
+                                     onTap: () {
+                                       Navigator.of(context).push(
+                                           MaterialPageRoute(
+                                               builder: (_) =>
+                                                   ViewImage(
+                                                       image:
+                                                       dataSnap[0]["Certificates"][index])));
+                                     },
+                                     child: Container(
+                                       height: 100,
+                                       child: Image.network(
+                                         dataSnap[0][
+                                         "Certificates"]
+                                         [index],
+                                         fit: BoxFit.cover,
+                                       ),
+                                     ),
+                                   );
+                                 },
+                               )
+                                   : Container();
+                             }
+                             return Center(
+                                 child:
+                                 CircularProgressIndicator());
+                           }),
+                       FutureBuilder(
+                           future: FirebaseDatabase.instance
+                               .reference()
+                               .child("Posts")
+                               .orderByChild("sid")
+                               .equalTo(widget.uid)
+                               .once(),
+                           builder: (context,
+                               AsyncSnapshot<DataSnapshot>
+                               snapshot) {
 
-                });
-                return (dataSnap[0]["officeGallery"].length != null)? GridView.builder(
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  itemCount:dataSnap[0]["officeGallery"].length,
-                  gridDelegate:
-                  SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2, ),
-                  itemBuilder: (context, index) {
-                    return Container(
-                      height: 100,
-                      child: Image.network(
-                        dataSnap[0]["officeGallery"][index],
-                        fit: BoxFit.cover,),
-                    );
-                  },):Container();
-              }
-              return Center(child: CircularProgressIndicator());
-            } ):Container(),
-            // if(widget.type == "Seller" && widget.officeGallery.length !=null)
-            //
-            // else
-            //   Container(),
-            // ( widget.type == "Seller"  )
-            // ?GridView.builder(
-            //   shrinkWrap: true,
-            //     physics: NeverScrollableScrollPhysics(),
-            //     itemCount: widget.officeGallery.length==null?0:widget.officeGallery.length,
-            //     gridDelegate:
-            //     SliverGridDelegateWithFixedCrossAxisCount(
-            //         crossAxisCount: 2, ),
-            //     itemBuilder: (context, index) {
-            //       return Container(
-            //         height: 100,
-            //         child: Image.network(
-            //             widget.officeGallery[index],
-            //           fit: BoxFit.cover,),
-            //       );
-            //     },)
-            //     : Container(),
+                             if (!snapshot.hasData) {
+                               return Text("No data here!");
+                             }
+                             if (snapshot.hasError) {
+                               return Text(
+                                   snapshot.error.toString());
+                             }
+                             if (snapshot.connectionState ==
+                                 ConnectionState.waiting) {
+                               return Center(
+                                   child:
+                                   CircularProgressIndicator());
+                             }
+                             if (snapshot.connectionState ==
+                                 ConnectionState.done) {
+                               Map<dynamic, dynamic> values =
+                                   snapshot.data.value;
+                               dataPost.clear();
+                               values.forEach((key, dat) {
+                                 dataPost.add(dat);
 
-          ],
+                               }
+
+                               );
+                               print("-----------------${dataPost.length}");
+                               return  (dataPost.length !=0)?
+
+                               GridView.builder(
+                                 shrinkWrap: true,
+                                 physics:
+                                 NeverScrollableScrollPhysics(),
+                                 itemCount: dataPost
+                                     .length,
+                                 gridDelegate:
+                                 SliverGridDelegateWithFixedCrossAxisCount(
+                                   crossAxisCount: 2,
+                                 ),
+                                 itemBuilder:
+                                     (context, ind) {
+                                   return GestureDetector(
+                                     onTap: () {
+                                       Navigator.of(context).push(
+                                         MaterialPageRoute(
+                                           builder: (_) =>
+                                               ViewImage(
+                                                 image:
+                                                 dataPost[ind]["image"].toString(),),),);
+                                     },
+                                     child: Padding(
+                                       padding: const EdgeInsets.all(4.0),
+                                       child: Container(
+                                         height: 100,
+                                         child: Image.network(
+                                           dataPost[ind]["image"].toString(),
+                                           fit: BoxFit.cover,
+                                         ),
+                                       ),
+                                     ),
+                                   );
+                                 },
+                               ):Container();
+
+                             }
+                             return CircularProgressIndicator();
+                           }),
+                       Container(child: Text("Reviews Here")),
+                     ],
+                   ),
+                 ),
+               ],
+             ):Container()
+              // if(widget.type == "Seller" && widget.officeGallery.length !=null)
+              //
+              // else
+              //   Container(),
+              // ( widget.type == "Seller"  )
+              // ?GridView.builder(
+              //   shrinkWrap: true,
+              //     physics: NeverScrollableScrollPhysics(),
+              //     itemCount: widget.officeGallery.length==null?0:widget.officeGallery.length,
+              //     gridDelegate:
+              //     SliverGridDelegateWithFixedCrossAxisCount(
+              //         crossAxisCount: 2, ),
+              //     itemBuilder: (context, index) {
+              //       return Container(
+              //         height: 100,
+              //         child: Image.network(
+              //             widget.officeGallery[index],
+              //           fit: BoxFit.cover,),
+              //       );
+              //     },)
+              //     : Container(),
+
+            ],
+          ),
         ),
       ),
     );

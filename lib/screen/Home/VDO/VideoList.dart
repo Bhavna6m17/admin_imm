@@ -58,9 +58,12 @@
 //   }
 // }
 
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ia_admin/constant/constants.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:video_player/video_player.dart';
 
 class VideoList extends StatefulWidget {
@@ -80,6 +83,20 @@ class _VideoListState extends State<VideoList> {
   ];
 
   List<VideoPlayerController> _controllers = [];
+  ImagePicker _videoPicker = ImagePicker();
+  File _video;
+  VideoPlayerController _videoPlayerController;
+  addVideo() async {
+   XFile pickedVideo = await _videoPicker.pickVideo(source: ImageSource.gallery);
+    _video = File(pickedVideo.path);
+   _videoPlayerController = VideoPlayerController.file(_video)
+     ..initialize().then((_) {
+       setState(() {});
+       _videoPlayerController.play();
+     });
+
+
+  }
 
   @override
   void initState() {
@@ -112,7 +129,14 @@ class _VideoListState extends State<VideoList> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
+
       appBar: new AppBar(title: Text("Videos"),
+      actions: [
+        IconButton(onPressed: (){
+
+
+        }, icon: Icon(Icons.more_vert),),
+      ],
       backgroundColor: Colors.blue.shade900,
       ),
       body: ListView.builder(

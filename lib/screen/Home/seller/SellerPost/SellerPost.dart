@@ -52,6 +52,7 @@ class _SellerPostState extends State<SellerPost> {
           }
           if (snapshot.connectionState == ConnectionState.done) {
             Map<dynamic, dynamic> values = snapshot.data.value;
+            dataSnap.clear();
             values.forEach((key, dat) {
               dataSnap.add(dat);
               print("-----------${dataSnap[0]["sellerName"]}");

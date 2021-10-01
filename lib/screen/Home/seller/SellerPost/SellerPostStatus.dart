@@ -461,244 +461,232 @@ class _PostStatusState extends State<PostStatus> {
                                       ],
                                     )),
                               ),
-                              ListView(
-                                shrinkWrap: true,
-                                children: [
-                                  TabBarView(
-                                    children: [
-                                      FutureBuilder(
-                                          future: FirebaseDatabase.instance
-                                              .reference()
-                                              .child("Users")
-                                              .orderByChild("uid")
-                                              .equalTo(widget.sid)
-                                              .once(),
-                                          builder: (context,
-                                              AsyncSnapshot<DataSnapshot>
-                                                  snapshot) {
-                                            if (snapshot.hasError) {
-                                              return Center(
-                                                  child: Text(
-                                                      snapshot.error.toString()));
-                                            }
-                                            if (snapshot.connectionState ==
-                                                ConnectionState.waiting) {
-                                              return Center(
-                                                  child:
-                                                      CircularProgressIndicator());
-                                            }
-                                            if (!snapshot.hasData) {
-                                              return Center(
-                                                  child: Text("No data here!"));
-                                            }
-                                            if (snapshot.connectionState ==
-                                                ConnectionState.done) {
-                                              Map<dynamic, dynamic> values =
-                                                  snapshot.data.value;
-                                              values.forEach((key, dat) {
-                                                dataSnap.add(dat);
-                                              });
-                                              return (dataSnap[0]["officeGallery"]
-                                                          .length !=
-                                                      null)
-                                                  ? GridView.builder(
-                                                      shrinkWrap: true,
-                                                      physics:
-                                                          NeverScrollableScrollPhysics(),
-                                                      itemCount: dataSnap[0]
-                                                              ["officeGallery"]
-                                                          .length,
-                                                      gridDelegate:
-                                                          SliverGridDelegateWithFixedCrossAxisCount(
-                                                        crossAxisCount: 2,
-                                                      ),
-                                                      itemBuilder:
-                                                          (context, index) {
-                                                        return GestureDetector(
-                                                          onTap: () {
-                                                            Navigator.of(context).push(
-                                                                MaterialPageRoute(
-                                                                    builder: (_) =>
-                                                                        ViewImage(
-                                                                            image:
-                                                                                dataSnap[0]["officeGallery"][index])));
-                                                          },
-                                                          child: Container(
-                                                            height: 100,
-                                                            child: Image.network(
-                                                              dataSnap[0][
-                                                                      "officeGallery"]
-                                                                  [index],
-                                                              fit: BoxFit.cover,
-                                                            ),
-                                                          ),
-                                                        );
-                                                      },
-                                                    )
-                                                  : Container();
-                                            }
-                                            return Center(
-                                                child:
-                                                    CircularProgressIndicator());
-                                          }),
-                                      FutureBuilder(
-                                          future: FirebaseDatabase.instance
-                                              .reference()
-                                              .child("Users")
-                                              .orderByChild("uid")
-                                              .equalTo(widget.sid)
-                                              .once(),
-                                          builder: (context,
-                                              AsyncSnapshot<DataSnapshot>
-                                                  snapshot) {
-                                            if (snapshot.connectionState ==
-                                                ConnectionState.waiting) {
-                                              return Center(
-                                                  child:
-                                                  CircularProgressIndicator());
-                                            }
-                                            if (!snapshot.hasData) {
-                                              return Center(
-                                                  child: Text("No data here!"));
-                                            }
-                                            if (snapshot.hasError) {
-                                              return Center(
-                                                  child: Text(
-                                                      snapshot.error.toString()));
-                                            }
-                                            if (snapshot.connectionState ==
-                                                ConnectionState.done) {
-                                              Map<dynamic, dynamic> values =
-                                                  snapshot.data.value;
-                                              values.forEach((key, dat) {
-                                                dataSnap.add(dat);
-                                              });
-                                              return (dataSnap[0]["Certificates"]
-                                                          .length !=
-                                                      null)
-                                                  ? GridView.builder(
-                                                      shrinkWrap: true,
-                                                      physics:
-                                                          NeverScrollableScrollPhysics(),
-                                                      itemCount: dataSnap[0]
-                                                              ["Certificates"]
-                                                          .length,
-                                                      gridDelegate:
-                                                          SliverGridDelegateWithFixedCrossAxisCount(
-                                                        crossAxisCount: 2,
-                                                      ),
-                                                      itemBuilder:
-                                                          (context, index) {
-                                                        return GestureDetector(
-                                                          onTap: () {
-                                                            Navigator.of(context).push(
-                                                                MaterialPageRoute(
-                                                                    builder: (_) =>
-                                                                        ViewImage(
-                                                                            image:
-                                                                                dataSnap[0]["Certificates"][index])));
-                                                          },
-                                                          child: Container(
-                                                            height: 100,
-                                                            child: Image.network(
-                                                              dataSnap[0][
-                                                                      "Certificates"]
-                                                                  [index],
-                                                              fit: BoxFit.cover,
-                                                            ),
-                                                          ),
-                                                        );
-                                                      },
-                                                    )
-                                                  : Container();
-                                            }
-                                            return Center(
-                                                child:
-                                                    CircularProgressIndicator());
-                                          }),
-                                      FutureBuilder(
-                                          future: FirebaseDatabase.instance
-                                              .reference()
-                                              .child("Posts")
-                                              .orderByChild("sid")
-                                              .equalTo(widget.sid)
-                                              .once(),
-                                          builder: (context,
-                                              AsyncSnapshot<DataSnapshot>
-                                              snapshot) {
+                              Container(
+                                height:height,
+                                child: TabBarView(
+                                  children: [
+                                    FutureBuilder(
 
-                                            if (!snapshot.hasData) {
-                                              return Center(
-                                                  child: Text("No data here!"));
-                                            }
-                                            if (snapshot.hasError) {
-                                              return Center(
-                                                  child: Text(
-                                                      snapshot.error.toString()));
-                                            }
-                                            if (snapshot.connectionState ==
-                                                ConnectionState.waiting) {
-                                              return Center(
-                                                  child:
-                                                  CircularProgressIndicator());
-                                            }
-                                            if (snapshot.connectionState ==
-                                                ConnectionState.done) {
-                                              Map<dynamic, dynamic> values =
-                                                  snapshot.data.value;
-                                              values.forEach((key, dat) {
-                                                dataSnap.add(dat);
-
-                                              }
-
-                                              );
-                                              print("-----------------${dataSnap.length}");
-                                              return  (dataSnap.length !=0)?
-
-                                                       GridView.builder(
-                                                        shrinkWrap: true,
-                                                        physics:
+                                        future: FirebaseDatabase.instance
+                                            .reference()
+                                            .child("Users")
+                                            .orderByChild("uid")
+                                            .equalTo(widget.sid)
+                                            .once(),
+                                        builder: (context,
+                                            AsyncSnapshot<DataSnapshot>
+                                                snapshot) {
+                                          if (snapshot.hasError) {
+                                            return Text(
+                                                snapshot.error.toString());
+                                          }
+                                          if (snapshot.connectionState ==
+                                              ConnectionState.waiting) {
+                                            return CircularProgressIndicator();
+                                          }
+                                          if (!snapshot.hasData) {
+                                            return Text("No data here!");
+                                          }
+                                          if (snapshot.connectionState ==
+                                              ConnectionState.done) {
+                                            Map<dynamic, dynamic> values =
+                                                snapshot.data.value;
+                                            values.forEach((key, dat) {
+                                              dataSnap.add(dat);
+                                            });
+                                            return (dataSnap[0]["officeGallery"]
+                                                        .length !=
+                                                    null)
+                                                ? GridView.builder(
+                                                    shrinkWrap: true,
+                                                    physics:
                                                         NeverScrollableScrollPhysics(),
-                                                        itemCount: dataSnap
-                                                            .length,
-                                                        gridDelegate:
+                                                    itemCount: dataSnap[0]
+                                                            ["officeGallery"]
+                                                        .length,
+                                                    gridDelegate:
                                                         SliverGridDelegateWithFixedCrossAxisCount(
-                                                          crossAxisCount: 2,
+                                                      crossAxisCount: 2,
+                                                    ),
+                                                    itemBuilder:
+                                                        (context, index) {
+                                                      return GestureDetector(
+                                                        onTap: () {
+                                                          Navigator.of(context).push(
+                                                              MaterialPageRoute(
+                                                                  builder: (_) =>
+                                                                      ViewImage(
+                                                                          image:
+                                                                              dataSnap[0]["officeGallery"][index])));
+                                                        },
+                                                        child: Container(
+                                                          height: 100,
+                                                          child: Image.network(
+                                                            dataSnap[0][
+                                                                    "officeGallery"]
+                                                                [index],
+                                                            fit: BoxFit.cover,
+                                                          ),
                                                         ),
-                                                        itemBuilder:
-                                                            (context, ind) {
-                                                          return GestureDetector(
-                                                            onTap: () {
-                                                              Navigator.of(context).push(
-                                                                  MaterialPageRoute(
-                                                                      builder: (_) =>
-                                                                          ViewImage(
-                                                                              image:
-                                                                              dataSnap[ind]["image"].toString(),),),);
-                                                            },
-                                                            child: Padding(
-                                                              padding: const EdgeInsets.all(4.0),
-                                                              child: Container(
-                                                                height: 100,
-                                                                child: Image.network(
-                                                                  dataSnap[ind]["image"].toString(),
-                                                                  fit: BoxFit.cover,
-                                                                ),
+                                                      );
+                                                    },
+                                                  )
+                                                : Container();
+                                          }
+                                          return Center(
+                                              child:
+                                                  CircularProgressIndicator());
+                                        }),
+                                    FutureBuilder(
+                                        future: FirebaseDatabase.instance
+                                            .reference()
+                                            .child("Users")
+                                            .orderByChild("uid")
+                                            .equalTo(widget.sid)
+                                            .once(),
+                                        builder: (context,
+                                            AsyncSnapshot<DataSnapshot>
+                                                snapshot) {
+                                          if (snapshot.connectionState ==
+                                              ConnectionState.waiting) {
+                                            return CircularProgressIndicator();
+                                          }
+                                          if (!snapshot.hasData) {
+                                            return Text("No data here!");
+                                          }
+                                          if (snapshot.hasError) {
+                                            return Text(
+                                                snapshot.error.toString());
+                                          }
+                                          if (snapshot.connectionState ==
+                                              ConnectionState.done) {
+                                            Map<dynamic, dynamic> values =
+                                                snapshot.data.value;
+                                            values.forEach((key, dat) {
+                                              dataSnap.add(dat);
+                                            });
+                                            return (dataSnap[0]["Certificates"]
+                                                        .length !=
+                                                    null)
+                                                ? GridView.builder(
+                                                    shrinkWrap: true,
+                                                    physics:
+                                                        NeverScrollableScrollPhysics(),
+                                                    itemCount: dataSnap[0]
+                                                            ["Certificates"]
+                                                        .length,
+                                                    gridDelegate:
+                                                        SliverGridDelegateWithFixedCrossAxisCount(
+                                                      crossAxisCount: 2,
+                                                    ),
+                                                    itemBuilder:
+                                                        (context, index) {
+                                                      return GestureDetector(
+                                                        onTap: () {
+                                                          Navigator.of(context).push(
+                                                              MaterialPageRoute(
+                                                                  builder: (_) =>
+                                                                      ViewImage(
+                                                                          image:
+                                                                              dataSnap[0]["Certificates"][index])));
+                                                        },
+                                                        child: Container(
+                                                          height: 100,
+                                                          child: Image.network(
+                                                            dataSnap[0][
+                                                                    "Certificates"]
+                                                                [index],
+                                                            fit: BoxFit.cover,
+                                                          ),
+                                                        ),
+                                                      );
+                                                    },
+                                                  )
+                                                : Container();
+                                          }
+                                          return Center(
+                                              child:
+                                                  CircularProgressIndicator());
+                                        }),
+                                    FutureBuilder(
+                                        future: FirebaseDatabase.instance
+                                            .reference()
+                                            .child("Posts")
+                                            .orderByChild("sid")
+                                            .equalTo(widget.sid)
+                                            .once(),
+                                        builder: (context,
+                                            AsyncSnapshot<DataSnapshot>
+                                            snapshot) {
+
+                                          if (!snapshot.hasData) {
+                                            return Text("No data here!");
+                                          }
+                                          if (snapshot.hasError) {
+                                            return Text(
+                                                snapshot.error.toString());
+                                          }
+                                          if (snapshot.connectionState ==
+                                              ConnectionState.waiting) {
+                                            return CircularProgressIndicator();
+                                          }
+                                          if (snapshot.connectionState ==
+                                              ConnectionState.done) {
+                                            Map<dynamic, dynamic> values =
+                                                snapshot.data.value;
+                                            dataPost.clear();
+                                            values.forEach((key, dat) {
+                                              dataPost.add(dat);
+
+                                            }
+
+                                            );
+                                            print("-----------------${dataPost.length}");
+                                            return  (dataPost.length !=0)?
+
+                                                     GridView.builder(
+                                                      shrinkWrap: true,
+                                                      physics:
+                                                      NeverScrollableScrollPhysics(),
+                                                      itemCount: dataPost
+                                                          .length,
+                                                      gridDelegate:
+                                                      SliverGridDelegateWithFixedCrossAxisCount(
+                                                        crossAxisCount: 2,
+                                                      ),
+                                                      itemBuilder:
+                                                          (context, ind) {
+                                                        return GestureDetector(
+                                                          onTap: () {
+                                                            Navigator.of(context).push(
+                                                                MaterialPageRoute(
+                                                                    builder: (_) =>
+                                                                        ViewImage(
+                                                                            image:
+                                                                            dataPost[ind]["image"].toString(),),),);
+                                                          },
+                                                          child: Padding(
+                                                            padding: const EdgeInsets.all(4.0),
+                                                            child: Container(
+                                                              height: 100,
+                                                              child: Image.network(
+                                                                dataPost[ind]["image"].toString(),
+                                                                fit: BoxFit.cover,
                                                               ),
                                                             ),
-                                                          );
-                                                        },
-                                                      ):Container();
+                                                          ),
+                                                        );
+                                                      },
+                                                    ):Container();
 
-                                            }
-                                            return Center(
-                                                child:
-                                                CircularProgressIndicator());
-                                          }),
-                                      Container(child: Text("e=review Here")),
-                                    ],
-                                  ),
-                                ],
+                                          }
+                                          return Center(
+                                              child:
+                                              CircularProgressIndicator());
+                                        }),
+                                    Container(child: Text("Reviews Here")),
+                                  ],
+                                ),
                               ),
 
                             ],
