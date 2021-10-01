@@ -91,6 +91,7 @@ class _VideoListState extends State<VideoList> {
     _video = File(pickedVideo.path);
    _videoPlayerController = VideoPlayerController.file(_video)
      ..initialize().then((_) {
+
        setState(() {});
        _videoPlayerController.play();
      });
