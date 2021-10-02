@@ -63,6 +63,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ia_admin/constant/constants.dart';
+import 'package:ia_admin/screen/Home/VDO/UploadVideo.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:video_player/video_player.dart';
 
@@ -73,8 +74,6 @@ class VideoList extends StatefulWidget {
   _VideoListState createState() => _VideoListState();
 }
 
-
-
 class _VideoListState extends State<VideoList> {
   List<String> urls = [
     "https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4",
@@ -83,21 +82,8 @@ class _VideoListState extends State<VideoList> {
   ];
 
   List<VideoPlayerController> _controllers = [];
-  ImagePicker _videoPicker = ImagePicker();
-  File _video;
-  VideoPlayerController _videoPlayerController;
-  addVideo() async {
-   XFile pickedVideo = await _videoPicker.pickVideo(source: ImageSource.gallery);
-    _video = File(pickedVideo.path);
-   _videoPlayerController = VideoPlayerController.file(_video)
-     ..initialize().then((_) {
 
-       setState(() {});
-       _videoPlayerController.play();
-     });
-
-
-  }
+  showVideoPop() {}
 
   @override
   void initState() {
@@ -130,15 +116,22 @@ class _VideoListState extends State<VideoList> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
-
-      appBar: new AppBar(title: Text("Videos"),
-      actions: [
-        IconButton(onPressed: (){
-
-
-        }, icon: Icon(Icons.more_vert),),
-      ],
-      backgroundColor: Colors.blue.shade900,
+      appBar: new AppBar(
+        title: Text("Videos"),
+        actions: [
+          TextButton(
+              onPressed: () {
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (_) => UploadVideo()));
+              },
+              child: Row(
+                children: [
+                  Text("Upload Video", style: TextStyle(color: kWhiteColor)),
+                  Icon(Icons.upload, color: kWhiteColor),
+                ],
+              )),
+        ],
+        backgroundColor: Colors.blue.shade900,
       ),
       body: ListView.builder(
         shrinkWrap: true,
@@ -154,9 +147,9 @@ class _VideoListState extends State<VideoList> {
                     Container(
                       child: controller.value.isInitialized
                           ? AspectRatio(
-                        aspectRatio: controller.value.aspectRatio,
-                        child: VideoPlayer(controller),
-                      )
+                              aspectRatio: controller.value.aspectRatio,
+                              child: VideoPlayer(controller),
+                            )
                           : Container(),
                     ),
                     Container(
@@ -168,14 +161,16 @@ class _VideoListState extends State<VideoList> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Text("Video Title",
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: kWhiteColor,
+                            Text(
+                              "Video Title",
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: kWhiteColor,
+                              ),
                             ),
-                            ),
-                            Text(" Title",
+                            Text(
+                              " Title",
                               style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w500,
@@ -202,7 +197,6 @@ class _VideoListState extends State<VideoList> {
         },
         child: Icon(
           isVideosPlaying() ? Icons.pause : Icons.play_arrow,
-
         ),
       ),
     );
