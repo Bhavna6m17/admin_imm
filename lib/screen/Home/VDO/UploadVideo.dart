@@ -15,6 +15,7 @@ class UploadVideo extends StatefulWidget {
 }
 
 class _UploadVideoState extends State<UploadVideo> {
+  TaskSnapshot snapshot;
   showSnackBar(String message) {
     final snackBar = SnackBar(
       content: Text(message),
@@ -30,12 +31,13 @@ class _UploadVideoState extends State<UploadVideo> {
   VideoPlayerController _videoPlayerController;
 
   uploadVideoFx() async {
-    TaskSnapshot snapshot = FirebaseStorage.instance
+     snapshot = await FirebaseStorage.instance
         .ref()
         .child("AdVideo")
+    .child("jhg")
         .putFile(_video)
         .snapshot;
-
+await urlget();
     // if (snapshot.state == TaskState.running) {
     //   var size = snapshot.bytesTransferred.toDouble() / snapshot.totalBytes;
     //   setState(() {
@@ -43,23 +45,26 @@ class _UploadVideoState extends State<UploadVideo> {
     //   });
     //   return runningDialouge();
     // }
-    if (snapshot.state == TaskState.success) {
-      videoUrl = await snapshot.ref.getDownloadURL().whenComplete(() {
-        FirebaseDatabase.instance
-            .reference()
-            .child("AdVideo")
-            .child(title.text)
-            .set({
-          "title": title.text.toString(),
-          "link": videoUrl.toString()
-        }).whenComplete(() {
-          showSnackBar("Video Uploaded!");
-          Navigator.pop(context);
-        });
-      });
-    }
-  }
 
+  }
+Future<void> urlget() async{
+  if (snapshot.state == TaskState.success) {
+    videoUrl = await snapshot.ref.getDownloadURL();
+    print("-----------$videoUrl");
+    FirebaseDatabase.instance
+        .reference()
+        .child("Ad Video")
+        .child("hgjh")
+        .set({
+      "title": "jhkj",
+      "link": videoUrl.toString()
+    }).whenComplete(() {
+      showSnackBar("Video Uploaded!");
+      Navigator.pop(context);
+    });
+
+  }
+}
   runningDialouge() {
     showDialog(
         barrierDismissible: false,

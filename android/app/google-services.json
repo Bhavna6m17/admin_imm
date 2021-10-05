@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "849395698067-7e24g1ofha3ukrimnj0r408f9cqim2ja.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.immigrationadda.ia_admin",
+            "certificate_hash": "b93764e05c57d42c8dc7a2a2cef0d8e462c5a83f"
+          }
+        },
+        {
           "client_id": "849395698067-r81iicrahkk5nnsa9cep05l8svamch2s.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

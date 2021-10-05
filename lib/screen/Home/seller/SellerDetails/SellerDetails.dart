@@ -54,9 +54,8 @@ class _UserDetailsState extends State<UserDetails> {
   deleteSeller() {
     FirebaseDatabase.instance
         .reference()
-        .child("Users")
-        .orderByChild("uid")
-        .equalTo(widget.uid)
+        .child("Sellers")
+        .child(widget.uid)
         .reference()
         .remove()
         .whenComplete(() {
@@ -66,9 +65,8 @@ class _UserDetailsState extends State<UserDetails> {
     });
     FirebaseDatabase.instance
         .reference()
-        .child("Sellers")
-        .orderByChild("uid")
-        .equalTo(widget.uid)
+        .child("Users")
+        .child(widget.uid)
         .reference()
         .remove()
         .whenComplete(() {
@@ -335,6 +333,7 @@ class _UserDetailsState extends State<UserDetails> {
                                         ConnectionState.done) {
                                       Map<dynamic, dynamic> values =
                                           snapshot.data.value;
+                                      dataSnap.clear();
                                       values.forEach((key, dat) {
                                         dataSnap.add(dat);
                                       });
